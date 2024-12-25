@@ -1,37 +1,79 @@
 services:
 
   postgres:
-    image: postgres:latest
     container_name: postgres
+    build:
+      context: ./services/postgres
+      dockerfile: Dockerfile
     restart: always
     environment:
-      POSTGRES_DB: "hapi"
-      POSTGRES_USER: "admin"
-      POSTGRES_PASSWORD: "admin"
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - hapi_network
+
+  identity-service:
+    container_name: identity-service
+    build:
+      context: ./services/identity-service
+      dockerfile: Dockerfile
+    restart: always
+    # command: start
+    command: start-dev
+    environment:
+      KC_HOSTNAME: localhost
+      KC_HOSTNAME_PORT: 30101
+      KC_HOSTNAME_STRICT_BACKCHANNEL: false
+      KC_HTTP_ENABLED: true
+      KC_HOSTNAME_STRICT_HTTPS: false
+      KC_HEALTH_ENABLED: true
+      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN}
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB}
+      KC_DB_USERNAME: ${POSTGRES_USER}
+      KC_DB_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "30101:8080"
+    volumes:
+      - .:/export
+    depends_on:
+      - postgres
+    networks:
+      - hapi_network
 
   hapi-fhir:
-    image: robferguson/hapi-fhir-au:latest
     container_name: hapi-fhir
+    build:
+      context: ./services/hapi-fhir
+      dockerfile: Dockerfile
     restart: on-failure
     environment:
-      SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres:5432/hapi"
-      SPRING_DATASOURCE_USERNAME: "admin"
-      SPRING_DATASOURCE_PASSWORD: "admin"
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
       SPRING_DATASOURCE_DRIVERCLASSNAME: "org.postgresql.Driver"
       SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: "ca.uhn.fhir.jpa.model.dialect.HapiFhirPostgresDialect"
     ports:
-      - "8080:8080"
+      - "30001:8080"
     configs:
       - source: hapi
         target: /app/config/application.yaml
+    networks:
+      - hapi_network
 
 volumes:
   postgres_data:
     driver: local
+
+networks:
+  hapi_network:
+    driver: bridge
 
 configs:
   hapi:

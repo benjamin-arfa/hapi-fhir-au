@@ -52,10 +52,3 @@ To remove the data volume:
 ```
 docker volume rm backend_postgres_data
 ```
-
-To restart the services:
-
-```
-docker compose up
-```
-
