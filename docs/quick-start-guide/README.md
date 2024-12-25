@@ -20,6 +20,7 @@ cd ~/workspace/hapi-fhir-au
 With a single command, you can create and start all the services:
 
 ```
+# ./.env
 docker compose up
 ```
 

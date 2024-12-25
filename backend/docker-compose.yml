@@ -5,7 +5,7 @@ services:
     build:
       context: ./services/postgres
       dockerfile: Dockerfile
-    restart: always
+    # restart: always
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
@@ -22,8 +22,7 @@ services:
     build:
       context: ./services/identity-service
       dockerfile: Dockerfile
-    restart: always
-    # command: start
+    # restart: always
     command: start-dev
     environment:
       KC_HOSTNAME: localhost
@@ -52,7 +51,7 @@ services:
     build:
       context: ./services/hapi-fhir
       dockerfile: Dockerfile
-    restart: on-failure
+    # restart: on-failure
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB}
       SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
