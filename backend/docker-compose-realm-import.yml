@@ -30,7 +30,7 @@ services:
         '-Dkeycloak.migration.provider=singleFile',
         '-Dkeycloak.migration.realmName=hapi-fhir-dev',
         '-Dkeycloak.migration.strategy=IGNORE_EXISTING',
-        '-Dkeycloak.migration.file=/export/development-realm.json',
+        '-Dkeycloak.migration.file=/import/development-realm.json',
       ]
     environment:
       KC_HOSTNAME: localhost
@@ -48,7 +48,7 @@ services:
     ports:
       - "30101:8080"
     volumes:
-      - .:/export
+      - .:/import
     depends_on:
       - postgres
     networks:
