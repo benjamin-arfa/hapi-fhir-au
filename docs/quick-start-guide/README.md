@@ -30,7 +30,7 @@ docker compose up
 Navigate to the HAPI FHIR **Welcome** page: 
 
 ```
-http://localhost:30001/
+http://localhost:8080/
 ```
 
 You should see something like:

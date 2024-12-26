@@ -17,13 +17,21 @@ services:
     networks:
       - hapi_network
 
-  identity-service:
-    container_name: identity-service
+  keycloak:
+    container_name: keycloak
     build:
-      context: ./services/identity-service
+      context: ./services/keycloak
       dockerfile: Dockerfile
     # restart: always
-    command: start-dev
+    command:
+      [
+        'start-dev',
+        '-Dkeycloak.migration.action=import',
+        '-Dkeycloak.migration.provider=singleFile',
+        '-Dkeycloak.migration.realmName=hapi-fhir-dev',
+        '-Dkeycloak.migration.strategy=IGNORE_EXISTING',
+        '-Dkeycloak.migration.file=/import/development-realm.json',
+      ]
     environment:
       KC_HOSTNAME: localhost
       KC_HOSTNAME_PORT: 30101
@@ -38,9 +46,9 @@ services:
       KC_DB_USERNAME: ${POSTGRES_USER}
       KC_DB_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
-      - "30101:8080"
+      - "5001:8080"
     volumes:
-      - .:/export
+      - .:/import
     depends_on:
       - postgres
     networks:
@@ -59,7 +67,7 @@ services:
       SPRING_DATASOURCE_DRIVERCLASSNAME: "org.postgresql.Driver"
       SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: "ca.uhn.fhir.jpa.model.dialect.HapiFhirPostgresDialect"
     ports:
-      - "30001:8080"
+      - "8080:8080"
     configs:
       - source: hapi
         target: /app/config/application.yaml
