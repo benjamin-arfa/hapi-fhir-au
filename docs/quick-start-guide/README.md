@@ -12,7 +12,7 @@ Clone the project by running the following command:
 
 ```
 git clone git@github.com:Robinyo/hapi-fhir-au.git
-cd ~/workspace/hapi-fhir-au
+
 ``` 
 
 ### Docker Compose
@@ -21,13 +21,16 @@ With a single command, you can create and start all the services:
 
 ```
 # ./.env
+cd ~/workspace/hapi-fhir-au/backend
 docker compose up
 ```
 
-Navigate to the **Welcome** page: 
+**Note:** Docker Compose will look for a `.env` file in the current working directory.
+
+Navigate to the HAPI FHIR **Welcome** page: 
 
 ```
-http://localhost:8080
+http://localhost:30001/
 ```
 
 You should see something like:
