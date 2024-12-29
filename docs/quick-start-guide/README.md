@@ -30,7 +30,7 @@ docker compose up
 Navigate to the HAPI FHIR **Welcome** page: 
 
 ```
-http://localhost:8080/
+http://localhost:4180
 ```
 
 You should see something like:
@@ -38,6 +38,12 @@ You should see something like:
 <p align="center">
   <img src="./welcome.png" alt="Welcome page"/>
 </p>
+
+Navigate to the Keycloak Administrator console:
+
+```
+http://localhost:5001
+```
 
 To stop the services:
 
@@ -55,4 +61,30 @@ To remove the data volume:
 
 ```
 docker volume rm backend_postgres_data
+docker volume rm backend_cache
+```
+
+### Miscellaneous 
+
+#### Export
+
+```
+docker compose -f docker-compose-keycloak-realm-export.yml up
+docker compose -f docker-compose-keycloak-realm-export.yml stop
+docker compose -f docker-compose-keycloak-realm-export.yml down
+docker volume rm backend_postgres_data
+docker volume rm backend_cache
+```
+
+
+```
+docker logs --tail 100 keycloak
+docker logs --tail 100 oauth2-proxy
+
+docker system prune
+docker compose build
+
+docker container ps -a
+
+docker image ls
 ```

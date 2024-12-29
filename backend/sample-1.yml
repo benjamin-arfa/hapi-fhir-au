@@ -1,0 +1,73 @@
+
+# https://github.com/oauth2-proxy/oauth2-proxy/issues/2890
+
+oauth2-proxy:
+enabled: true
+image:
+repository: "quay.io/oauth2-proxy/oauth2-proxy"
+tag: "v7.7.1"
+fullnameOverride: "oauth2-proxy"
+namespaceOverride: "namespace"
+config:
+existingSecret: namespace-secret
+extraArgs:
+provider: "oidc"
+skip-provider-button: true
+skip-jwt-bearer-tokens: true
+extra-jwt-issuers: "https://keycloak.com/realms/realmname=client1,https://keycloak.com/realms/realmname=client2"
+set-xauthrequest: true
+pass-access-token: true
+pass-authorization-header: true
+set-authorization-header: true
+skip-auth-strip-headers: false
+skip-auth-preflight: true
+oidc-issuer-url: "https://keycloak.com"
+cookie-secure: "false"
+upstream: "static://200"
+cookie-csrf-expire: "5m"
+cookie-refresh: "5m"
+cookie-expire: "60m"
+reverse-proxy: true
+scope: openid email profile
+silence-ping-logging: true
+sessionStorage:
+type: redis
+redis:
+existingSecret: "redis"
+standalone:
+connectionUrl: "redis://redis-master.namespace.svc.cluster.local:6379"
+extraVolumes:
+  - name: ca-bundle-cert
+secret:
+secretName: ca-bundle
+
+extraVolumeMounts:
+  - mountPath: /etc/ssl/certs/
+name: ca-bundle-cert
+
+resources:
+limits:
+cpu: 1000m
+memory: 1024Mi
+requests:
+cpu: 100m
+memory: 300Mi
+
+redis:
+enabled: true
+image:
+tag: 7.2.4
+namespaceOverride: "namespace"
+fullnameOverride: "redis"
+
+replica:
+  replicaCount: 0
+
+master:
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 2Gi
