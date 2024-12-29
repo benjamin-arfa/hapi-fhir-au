@@ -68,6 +68,8 @@ docker volume rm backend_cache
 
 #### Export
 
+Export:
+
 ```
 docker compose -f docker-compose-keycloak-realm-export.yml up
 docker compose -f docker-compose-keycloak-realm-export.yml stop
@@ -76,15 +78,26 @@ docker volume rm backend_postgres_data
 docker volume rm backend_cache
 ```
 
+Check the logs:
 
 ```
 docker logs --tail 100 keycloak
 docker logs --tail 100 oauth2-proxy
+```
 
+Clean and build:
+
+```
 docker system prune
 docker compose build
 
+```
+
+Misc:
+
+```
 docker container ps -a
 
 docker image ls
 ```
+
