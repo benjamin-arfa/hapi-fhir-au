@@ -11,7 +11,7 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
-      - "5432:5432"
+      - 5432:5432
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
@@ -28,14 +28,12 @@ services:
         'start-dev',
       ]
     environment:
-      KC_HOSTNAME: localhost
-      KC_HOSTNAME_PORT: 5001
+      KC_HOSTNAME: ${KEYCLOAK_HOSTNAME}
+      KC_HOSTNAME_PORT: ${KEYCLOAK_PORT}
       KC_HOSTNAME_STRICT_BACKCHANNEL: false
       KC_HTTP_ENABLED: true
       KC_HOSTNAME_STRICT_HTTPS: false
       KC_HEALTH_ENABLED: true
-      # KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN}
-      # KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
       KC_BOOTSTRAP_ADMIN_USERNAME: ${KEYCLOAK_ADMIN}
       KC_BOOTSTRAP_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
       KC_DB: postgres
@@ -43,7 +41,7 @@ services:
       KC_DB_USERNAME: ${POSTGRES_USER}
       KC_DB_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
-      - "5001:8080"
+      - ${KEYCLOAK_PORT}:8080
     volumes:
       - .:/import
     depends_on:
@@ -66,6 +64,8 @@ services:
     configs:
       - source: hapi
         target: /app/config/application.yaml
+    depends_on:
+      - postgres
     networks:
       - hapi_network
 
@@ -79,7 +79,7 @@ services:
     environment:
 
       # https://developer.okta.com/blog/2022/07/14/add-auth-to-any-app-with-oauth2-proxy
-      # FROM quay.io/oauth2-proxy/oauth2-proxy:7.7.1
+      # FROM quay.io/oauth2-proxy/oauth2-proxy:latest
       # FROM quay.io/keycloak/keycloak:26.0.7
 
       # OAuth2 client configuration
@@ -119,7 +119,7 @@ services:
       OAUTH2_PROXY_PROFILE_URL: ${PROTOCOL}://${KEYCLOAK_HOSTNAME}:${KEYCLOAK_PORT}/realms/${KEYCLOAK_REALM}/protocol/openid-connect/userinfo
 
       # Upstream config - HAPI FHIR
-      OAUTH2_PROXY_HTTP_ADDRESS: 0.0.0.0:4180
+      OAUTH2_PROXY_HTTP_ADDRESS: 0.0.0.0:${OAUTH2_PROXY_PORT}
       OAUTH2_PROXY_UPSTREAMS: http://hapi-fhir
       OAUTH2_PROXY_EMAIL_DOMAINS: "*"
 
@@ -137,7 +137,7 @@ services:
       OAUTH2_PROXY_REDIS_CONNECTION_URL: redis://redis
       OAUTH2_PROXY_SESSION_STORE_TYPE: redis
 
-
+      # Misc
       OAUTH2_PROXY_CODE_CHALLENGE_METHOD: S256
       OAUTH2_PROXY_SSL_INSECURE_SKIP_VERIFY: true
       # OAUTH2_PROXY_COOKIE_DOMAINS: ${OAUTH2_PROXY_HOSTNAME}:${OAUTH2_PROXY_PORT}
@@ -147,7 +147,7 @@ services:
 
 
     ports:
-      - 4180:4180
+      - ${OAUTH2_PROXY_PORT}:4180
     depends_on:
       - keycloak
     networks:

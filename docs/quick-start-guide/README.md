@@ -39,7 +39,7 @@ You should see something like:
   <img src="./welcome.png" alt="Welcome page"/>
 </p>
 
-Navigate to the Keycloak Administrator console:
+Navigate to the Keycloak Admin console:
 
 ```
 http://localhost:5001
@@ -96,7 +96,6 @@ Misc:
 
 ```
 docker container ps -a
-
 docker image ls
 ```
 
