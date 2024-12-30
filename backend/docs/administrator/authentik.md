@@ -7,7 +7,7 @@ https://docs.goauthentik.io/docs/install-config/install/docker-compose
 
 curl -O https://goauthentik.io/docker-compose.yml
 
-
+authentik oauth2 proxy 
 
 
 
