@@ -102,6 +102,13 @@ services:
       context: ./services/oauth2-proxy
       dockerfile: Dockerfile
     # restart: unless-stopped
+    command:
+      [
+        '--standard-logging=true',
+        '--auth-logging=true',
+        '--request-logging=true',
+        '--skip-auth-preflight=true',
+      ]
     environment:
 
       # https://developer.okta.com/blog/2022/07/14/add-auth-to-any-app-with-oauth2-proxy
@@ -112,25 +119,30 @@ services:
       OAUTH2_PROXY_CLIENT_ID: ${CLIENT_ID}
       OAUTH2_PROXY_CLIENT_SECRET: ${CLIENT_SECRET}
 
+      # Cookie configuration
       OAUTH2_PROXY_COOKIE_NAME: ${COOKIE_NAME}
       OAUTH2_PROXY_COOKIE_SECRET: ${COOKIE_SECRET}
+      OAUTH2_PROXY_COOKIE_HTTPONLY: true
+      OAUTH2_PROXY_COOKIE_SECURE: false
+      OAUTH2_PROXY_COOKIE_REFRESH: 5m
+      OAUTH2_PROXY_COOKIE_EXPIRE: 10m
 
-      # OAUTH2_PROXY_SCOPE: openid
-      OAUTH2_PROXY_SCOPE: email
+      # OAUTH2_PROXY_COOKIE_DOMAINS: ${OAUTH2_PROXY_HOSTNAME}:${OAUTH2_PROXY_PORT}
+      # OAUTH2_PROXY_COOKIE_DOMAINS: ${OAUTH2_PROXY_HOSTNAME}
+
+      # https://github.com/oauth2-proxy/oauth2-proxy/issues/1461
+      OAUTH2_PROXY_COOKIE_CSRF_PER_REQUEST: true
+
+      OAUTH2_PROXY_SCOPE: openid email profile
 
       # http://localhost:5001/resources/dtuvp/admin/keycloak.v2/#openid-connect-compatibility-modes
       # Try disabling "Use Refresh Token"
 
-      # https://github.com/oauth2-proxy/oauth2-proxy/issues/1461
-      OAUTH2_PROXY_COOKIE_CSRF_PER_REQUEST: true
-      OAUTH2_PROXY_COOKIE_CSRF_EXPIRE: 5m
-
       # https://geek-cookbook.funkypenguin.co.nz/recipes/kubernetes/oauth2-proxy/
       OAUTH2_PROXY_PASS_AUTHORIZATION_HEADER: true
-      OAUTH2_PROXY_COOKIE_REFRESH: 5m
 
       # Provider config
-      # OAUTH2_PROXY_PROVIDER: oidc
+      OAUTH2_PROXY_SKIP_OIDC_DISCOVERY: true
       OAUTH2_PROXY_PROVIDER: keycloak-oidc
       OAUTH2_PROXY_OIDC_EXTRA_AUDIENCE: ${CLIENT_ID}
       OAUTH2_PROXY_PROVIDER_DISPLAY_NAME: Keycloak
@@ -138,7 +150,6 @@ services:
       OAUTH2_PROXY_OIDC_ISSUER_URL: ${PROTOCOL}://${KEYCLOAK_HOSTNAME}:${KEYCLOAK_PORT}/realms/${KEYCLOAK_REALM}
 
       # Provider extra config ???
-      OAUTH2_PROXY_SKIP_OIDC_DISCOVERY: true
       OAUTH2_PROXY_LOGIN_URL: ${PROTOCOL}://${KEYCLOAK_HOSTNAME}:${KEYCLOAK_PORT}/realms/${KEYCLOAK_REALM}/protocol/openid-connect/auth
       OAUTH2_PROXY_REDEEM_URL: ${PROTOCOL}://${KEYCLOAK_HOSTNAME}:${KEYCLOAK_PORT}/realms/${KEYCLOAK_REALM}/protocol/openid-connect/token
       OAUTH2_PROXY_OIDC_JWKS_URL: ${PROTOCOL}://${KEYCLOAK_HOSTNAME}:${KEYCLOAK_PORT}/realms/${KEYCLOAK_REALM}/protocol/openid-connect/certs
@@ -155,8 +166,9 @@ services:
       OAUTH2_PROXY_PASS_ACCESS_TOKEN: true
       OAUTH2_PROXY_SKIP_AUTH_STRIP_HEADERS: false
       OAUTH2_PROXY_SKIP_AUTH_PREFLIGHT: true
-      OAUTH2_PROXY_COOKIE_SECURE: false
-      OAUTH2_PROXY_REVERSE_PROXY: true
+
+      # OAUTH2_PROXY_REVERSE_PROXY: true
+      OAUTH2_PROXY_REVERSE_PROXY: false
       OAUTH2_PROXY_SILENCE_PING_LOGGING: true
 
       # Session storage
@@ -167,8 +179,7 @@ services:
       # Misc
       OAUTH2_PROXY_CODE_CHALLENGE_METHOD: S256
       OAUTH2_PROXY_SSL_INSECURE_SKIP_VERIFY: true
-      # OAUTH2_PROXY_COOKIE_DOMAINS: ${OAUTH2_PROXY_HOSTNAME}:${OAUTH2_PROXY_PORT}
-      # OAUTH2_PROXY_COOKIE_DOMAINS: ${OAUTH2_PROXY_HOSTNAME}
+
       OAUTH2_PROXY_WHITELIST_DOMAINS: .${OAUTH2_PROXY_HOSTNAME}:${OAUTH2_PROXY_PORT}
       OAUTH2_PROXY_INSECURE_OIDC_ALLOW_UNVERIFIED_EMAIL: true
 
