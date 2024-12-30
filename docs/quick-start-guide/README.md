@@ -97,5 +97,6 @@ Misc:
 ```
 docker container ps -a
 docker image ls
+docker volume ls
 ```
 

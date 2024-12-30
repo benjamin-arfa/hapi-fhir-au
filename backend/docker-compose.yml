@@ -70,7 +70,7 @@ services:
     volumes:
       - .:/import
     depends_on:
-      postgresql:
+      postgres:
         condition: service_healthy
       redis:
         condition: service_healthy
@@ -91,7 +91,7 @@ services:
       - source: hapi
         target: /app/config/application.yaml
     depends_on:
-      postgresql:
+      postgres:
         condition: service_healthy
       redis:
         condition: service_healthy
@@ -176,7 +176,7 @@ services:
     ports:
       - ${OAUTH2_PROXY_PORT:-4180}:4180
     depends_on:
-      postgresql:
+      postgres:
         condition: service_healthy
       redis:
         condition: service_healthy
