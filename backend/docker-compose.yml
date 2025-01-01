@@ -116,6 +116,7 @@ services:
 
       # https://developer.okta.com/blog/2022/07/14/add-auth-to-any-app-with-oauth2-proxy
       # https://oauth2-proxy.github.io/oauth2-proxy/configuration/providers/openid_connect
+      # https://oauth2-proxy.github.io/oauth2-proxy/configuration/providers/keycloak
       # https://oauth2-proxy.github.io/oauth2-proxy/configuration/providers/keycloak_oidc
 
       # Provider config
