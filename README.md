@@ -24,7 +24,6 @@ Clone the project by running the following command:
 
 ```
 git clone git@github.com:Robinyo/hapi-fhir-au.git
-
 ``` 
 
 ### Docker Compose
