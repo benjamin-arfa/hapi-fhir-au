@@ -32,7 +32,6 @@ git clone git@github.com:Robinyo/hapi-fhir-au.git
 With a single command, you can create and start all the services:
 
 ```
-# ./.env
 cd ~/workspace/hapi-fhir-au/backend
 docker compose up
 ```
@@ -75,7 +74,7 @@ To remove the services:
 docker compose down
 ```
 
-To remove the data volume:
+To remove the data volumes:
 
 ```
 docker volume rm backend_postgres_data
@@ -88,9 +87,10 @@ docker volume rm backend_cache
 
 #### Export
 
-Export:
+To export the `hapi-fhir-dev` realm to a single file (development-realm.json):
 
 ```
+docker compose stop
 docker compose -f docker-compose-keycloak-realm-export.yml up
 docker compose -f docker-compose-keycloak-realm-export.yml stop
 docker compose -f docker-compose-keycloak-realm-export.yml down
