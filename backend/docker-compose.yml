@@ -59,7 +59,7 @@ services:
         '-Dkeycloak.migration.file=/import/development-realm.json',
       ]
     environment:
-      KC_HOSTNAME: ${KEYCLOAK_HOSTNAME:-localhost}
+      KC_HOSTNAME: ${KEYCLOAK_HOSTNAME:-127.0.0.1}
       KC_HOSTNAME_PORT: ${KEYCLOAK_PORT:-5001}
       KC_HOSTNAME_STRICT_BACKCHANNEL: false
       KC_HTTP_ENABLED: true
@@ -114,15 +114,23 @@ services:
       ]
     environment:
 
+      # https://developer.okta.com/blog/2022/07/14/add-auth-to-any-app-with-oauth2-proxy
       # https://oauth2-proxy.github.io/oauth2-proxy/configuration/providers/openid_connect
       # https://oauth2-proxy.github.io/oauth2-proxy/configuration/providers/keycloak_oidc
-      # https://zitadel.com/docs/examples/identity-proxy/oauth2-proxy
 
       # Provider config
       OAUTH2_PROXY_SKIP_OIDC_DISCOVERY: true
-      # OAUTH2_PROXY_PROVIDER: oidc
-      OAUTH2_PROXY_PROVIDER: keycloak-oidc
-      OAUTH2_PROXY_PROVIDER_DISPLAY_NAME: Keycloak
+      OAUTH2_PROXY_PROVIDER: oidc
+      OAUTH2_PROXY_PROVIDER_DISPLAY_NAME: OpenID Connect
+      # OAUTH2_PROXY_PROVIDER: keycloak
+      # OAUTH2_PROXY_PROVIDER_DISPLAY_NAME: Keycloak
+      # OAUTH2_PROXY_PROVIDER: keycloak-oidc
+      # OAUTH2_PROXY_PROVIDER_DISPLAY_NAME: Keycloak OIDC
+
+      # https://github.com/oauth2-proxy/oauth2-proxy/issues/2117#issue-1712501553
+      # AUTH2_PROXY_OIDC_EXTRA_AUDIENCE: ${CLIENT_ID}
+      OAUTH2_PROXY_OIDC_EXTRA_AUDIENCE: account
+
       OAUTH2_PROXY_REDIRECT_URL: ${PROTOCOL}://${OAUTH2_PROXY_HOSTNAME}:${OAUTH2_PROXY_PORT}/oauth2/callback
       OAUTH2_PROXY_OIDC_ISSUER_URL: ${PROTOCOL}://${KEYCLOAK_HOSTNAME}:${KEYCLOAK_PORT}/realms/${KEYCLOAK_REALM}
       OAUTH2_PROXY_UPSTREAMS: http://hapi-fhir
@@ -135,12 +143,19 @@ services:
       OAUTH2_PROXY_CLIENT_ID: ${CLIENT_ID}
       OAUTH2_PROXY_CLIENT_SECRET: ${CLIENT_SECRET}
 
+      # https://devforum.okta.com/t/add-auth-to-any-app-with-oauth2-proxy/21255/13
+      OAUTH2_PROXY_SCOPE: "openid email profile offline_access"
+
       OAUTH2_PROXY_PASS_ACCESS_TOKEN: true
 
       # Cookie configuration
       OAUTH2_PROXY_COOKIE_NAME: ${COOKIE_NAME}
       OAUTH2_PROXY_COOKIE_SECRET: ${COOKIE_SECRET}
-      OAUTH2_PROXY_COOKIE_DOMAINS: ${OAUTH2_PROXY_HOSTNAME}:${OAUTH2_PROXY_PORT}
+      # OAUTH2_PROXY_COOKIE_DOMAIN:  127.0.0.1
+      # OAUTH2_PROXY_COOKIE_DOMAINS: ${OAUTH2_PROXY_HOSTNAME}:${OAUTH2_PROXY_PORT}
+      # OAUTH2_PROXY_COOKIE_DOMAINS:  "*"
+      # OAUTH2_PROXY_COOKIE_DOMAINS:  127.0.0.1:4180
+      # OAUTH2_PROXY_COOKIE_DOMAINS:  127.0.0.1
       OAUTH2_PROXY_COOKIE_SAMESITE: lax
       OAUTH2_PROXY_COOKIE_HTTPONLY: true
       OAUTH2_PROXY_COOKIE_SECURE: false
@@ -167,6 +182,23 @@ services:
       OAUTH2_PROXY_PROFILE_URL: ${PROTOCOL}://${KEYCLOAK_HOSTNAME}:${KEYCLOAK_PORT}/realms/${KEYCLOAK_REALM}/protocol/openid-connect/userinfo
       OAUTH2_PROXY_VALIDATE_URL: ${PROTOCOL}://${KEYCLOAK_HOSTNAME}:${KEYCLOAK_PORT}/realms/${KEYCLOAK_REALM}/protocol/openid-connect/userinfo
 
+
+      # https://github.com/oauth2-proxy/oauth2-proxy/issues/628
+      OAUTH2_PROXY_PASS_AUTHORIZATION_HEADER: true
+
+
+
+      # https://github.com/oauth2-proxy/oauth2-proxy/issues/2890
+      OAUTH2_PROXY_SKIP_JWT_BEARER_TOKENS: true
+      OAUTH2_PROXY_SET_XAUTHREQUEST: true
+      OAUTH2_PROXY_SKIP_AUTH_STRIP_HEADERS: false
+      OAUTH2_PROXY_SKIP_AUTH_PREFLIGHT: true
+
+
+
+      # OAUTH2_PROXY_REVERSE_PROXY: true
+      OAUTH2_PROXY_REVERSE_PROXY: false
+      OAUTH2_PROXY_SILENCE_PING_LOGGING: true
 
       # Session storage
       OAUTH2_PROXY_REDIS_CONNECTION_URL: redis://redis
