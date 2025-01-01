@@ -48,7 +48,7 @@ http://localhost:4180
 You should see something like:
 
 <p align="center">
-  <img src="./welcome.png" alt="Welcome page"/>
+  <img src="./docs/quick-start-guide/welcome.png" alt="Welcome page"/>
 </p>
 
 To stop the services:
