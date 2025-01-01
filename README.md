@@ -39,7 +39,7 @@ docker compose up
 
 **Note:** Docker Compose will look for a `.env` file in the current working directory.
 
-Navigate to the HAPI FHIR **Welcome** page:
+To navigate to the HAPI FHIR **Welcome** page:
 
 ```
 http://localhost:4180
@@ -48,7 +48,19 @@ http://localhost:4180
 You should see something like:
 
 <p align="center">
-  <img src="./docs/quick-start-guide/welcome.png" alt="Welcome page"/>
+  <img src="./docs/quick-start-guide/hapi-fhir-welcome-page.png" alt="Welcome page"/>
+</p>
+
+To navigate to the Keycloak Admin console:
+
+```
+http://localhost:5001
+```
+
+You should see something like:
+
+<p align="center">
+  <img src="./docs/quick-start-guide/keycloak-welcome-page.png" alt="Welcome page"/>
 </p>
 
 To stop the services:
@@ -70,11 +82,7 @@ docker volume rm backend_postgres_data
 docker volume rm backend_cache
 ```
 
-To navigate to the Keycloak Admin console:
 
-```
-http://localhost:5001
-```
 
 ### Miscellaneous
 
