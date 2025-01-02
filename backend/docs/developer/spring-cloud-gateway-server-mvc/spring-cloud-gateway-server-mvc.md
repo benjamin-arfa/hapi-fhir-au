@@ -35,10 +35,16 @@ mvn clean install -Ptest spring-boot:repackage
 
 **Note:** `dev` is the active by default profile.
 
+To run the application:
+
+```
+./mvnw spring-boot:run
+```
+
 Check the Spring Boot Actuator health endpoint:
 
 ```
-http://localhost:8080/actuator/health
+http://localhost:4180/actuator/health
 ```
 
 You should receive a JSON-formatted message saying {"status":"UP"} which indicates that everything is working fine. 

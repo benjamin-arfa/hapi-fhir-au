@@ -6,4 +6,4 @@
   * [Working with Keycloak](./administrator/keycloak.md)
 * Developer Documentation
   * Backend
-    * [Build Management](./developer/build-management.md)  
+    * [Spring Cloud Gateway Server MVC](./developer/spring-cloud-gateway-server-mvc/spring-cloud-gateway-server-mvc.md)
