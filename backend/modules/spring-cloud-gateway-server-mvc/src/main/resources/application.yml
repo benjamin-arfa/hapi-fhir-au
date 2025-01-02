@@ -1,0 +1,28 @@
+server:
+  port: 4180
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
+    # org.springframework.security: INFO
+    # org.springframework.security: INFO
+    # org.springframework.boot.autoconfigure: DEBUG
+    # reactor.netty.http.client.HttpClient: INFO
+
+spring:
+  main:
+    banner-mode: off
+  profiles:
+    active: @spring.profiles.active@
+  thymeleaf:
+    cache: false
+  cloud:
+    gateway:
+      routes:
+        - id: hapi-fhir
+          uri: http://localhost:8080
+          predicates:
+            - Path=/
+          filters:
+            - TokenRelay=
