@@ -38,24 +38,38 @@
 
 	<dependencies>
 
-		<!--
-		 See:
-		   - https://docs.spring.io/spring-cloud-gateway/reference/spring-cloud-gateway-server-mvc/starter.html
-		   - https://github.com/spring-cloud/spring-cloud-gateway/blob/main/spring-cloud-starter-gateway-mvc/pom.xml
-		 -->
+		<!-- See: https://docs.spring.io/spring-cloud-gateway/reference/spring-cloud-gateway-server-mvc/starter.html -->
+
+		<!-- See: https://github.com/netty/netty/issues/11020 -->
+
+		<dependency>
+			<groupId>io.netty</groupId>
+			<artifactId>netty-resolver-dns-native-macos</artifactId>
+			<version>4.1.116.Final</version>
+			<classifier>osx-aarch_64</classifier>
+		</dependency>
+
+
 
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter</artifactId>
+			<artifactId>spring-cloud-starter-gateway-mvc</artifactId>
 		</dependency>
+
+		<!-- See: https://medium.com/att-israel/spring-cloud-gateway-mvc-migration-from-reactive-one-ed2025efc165
+
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-gateway-server-mvc</artifactId>
+			<artifactId>spring-cloud-starter-gateway-mvc</artifactId>
 		</dependency>
+
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-gateway</artifactId>
 		</dependency>
+
+         -->
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>

@@ -20,7 +20,7 @@ spring:
       mvc:
         routes:
           - id: hapi-fhir
-            uri: http://example.com/
+            uri: http://www.bom.gov.au/
             predicates:
               - Path=/**
 
@@ -35,5 +35,3 @@ management:
 
 # https://docs.spring.io/spring-cloud-gateway/reference/spring-cloud-gateway/actuator-api.html
 # https://cloud.spring.io/spring-cloud-gateway/multi/multi__tls_ssl.html
-
-# https://medium.com/att-israel/spring-cloud-gateway-mvc-migration-from-reactive-one-ed2025efc165

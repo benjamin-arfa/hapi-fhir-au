@@ -77,7 +77,7 @@ To remove the data volumes:
 
 ```
 docker volume rm backend_postgres_data
-docker volume rm backend_cache
+# docker volume rm backend_cache
 ```
 
 
@@ -94,7 +94,7 @@ docker compose -f docker-compose-keycloak-realm-export.yml up
 docker compose -f docker-compose-keycloak-realm-export.yml stop
 docker compose -f docker-compose-keycloak-realm-export.yml down
 docker volume rm backend_postgres_data
-docker volume rm backend_cache
+# docker volume rm backend_cache
 ```
 
 Check the logs:

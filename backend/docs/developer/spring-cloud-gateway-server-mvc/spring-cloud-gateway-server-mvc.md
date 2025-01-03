@@ -9,8 +9,28 @@ You need to set up your development environment before you can do anything.
 What you need:
 
 * git
-* JDK 17 or later
+* JDK 21 or later
 * Maven 3.9.9 or later
+
+For example:
+
+```
+brew install jenv
+brew install openjdk@21
+```
+
+Add the following lines to your shell startup file (~/.bash_profile, ~/.zshrc, etc.):
+
+```
+export PATH="$HOME/.jenv/bin:$PATH"
+eval "$(jenv init -)"
+```
+
+To set your JDK:
+
+```
+jenv global 21.0
+```
 
 ### Development
 
@@ -44,9 +64,29 @@ To run the application:
 Check the Spring Boot Actuator health endpoint:
 
 ```
-http://localhost:4180/actuator/health
+curl http://localhost:4180/actuator/health
 ```
 
-You should receive a JSON-formatted message saying {"status":"UP"} which indicates that everything is working fine. 
+You should receive a JSON-formatted message saying {"status":"UP"} which indicates that everything is working fine.
+
+To check the Gateway routes:
+
+```
+curl http://localhost:4180/actuator/gateway/routes
+```
+
+You should receive a JSON-formatted message:
+
+```
+[
+    {
+        "predicate": "Paths: [/fhir/**, /**], match trailing slash: true",
+        "route_id": "hapi-fhir",
+        "filters": [],
+        "uri": "http://localhost:8080",
+        "order": 0
+    }
+]
+```
 
 To stop the server (Ctrl+c).
