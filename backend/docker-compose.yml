@@ -76,8 +76,8 @@ services:
       SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-secret}
       SPRING_DATASOURCE_DRIVERCLASSNAME: "org.postgresql.Driver"
       SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: "ca.uhn.fhir.jpa.model.dialect.HapiFhirPostgresDialect"
-    ports:
-      - 8080:8080
+    # ports:
+    #   - 8080:8080
     configs:
       - source: hapi
         target: /app/config/application.yaml

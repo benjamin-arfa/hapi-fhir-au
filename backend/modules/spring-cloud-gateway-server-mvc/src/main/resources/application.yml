@@ -20,7 +20,7 @@ spring:
       mvc:
         routes:
           - id: hapi-fhir
-            uri: http://example.com/
+            uri: ${HAPI_FHIR_URI:https://httpbin.org/}
             predicates:
               - Path=/**
 
