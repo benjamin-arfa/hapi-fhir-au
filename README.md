@@ -77,7 +77,7 @@ To remove the data volumes:
 
 ```
 docker volume rm backend_postgres_data
-# docker volume rm backend_cache
+docker volume rm backend_cache
 ```
 
 
