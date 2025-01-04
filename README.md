@@ -123,6 +123,20 @@ docker image ls
 docker volume ls
 ```
 
+/etc/hosts:
+
+Update your `/etc/hosts` file:
+
+```
+sudo nano /etc/hosts
+```
+
+Add 'keycloak':
+
+```
+127.0.0.1       localhost keycloak
+```
+
 ![divider](./divider.png)
 
 ## ❯ Resources
