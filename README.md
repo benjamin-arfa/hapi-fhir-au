@@ -61,6 +61,12 @@ You should see something like:
   <img src="./docs/quick-start-guide/keycloak-welcome-page.png" alt="Welcome page"/>
 </p>
 
+Navigate to the Keycloak Account Console:
+
+```
+http://localhost:5001/realms/hapi-fhir-dev/account
+```
+
 To stop the services:
 
 ```
@@ -79,8 +85,6 @@ To remove the data volumes:
 docker volume rm backend_postgres_data
 docker volume rm backend_cache
 ```
-
-
 
 ### Miscellaneous
 
