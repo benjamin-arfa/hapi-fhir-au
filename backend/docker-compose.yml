@@ -60,6 +60,9 @@ services:
         '-Dkeycloak.migration.file=/import/development-realm.json',
       ]
     environment:
+
+      # https://www.keycloak.org/server/reverseproxy
+
       KC_HOSTNAME: ${KEYCLOAK_HOSTNAME:-keycloak}
       KC_HOSTNAME_PORT: ${KEYCLOAK_PORT:-5001}
 
@@ -76,6 +79,7 @@ services:
       KC_DB_USERNAME: ${POSTGRES_USER:-admin}
       KC_DB_PASSWORD: ${POSTGRES_PASSWORD:-secret}
       KC_HEALTH_ENABLED: true
+
     env_file: ./.env
     ports:
       - ${KEYCLOAK_PORT:-5001}:8080
@@ -127,6 +131,10 @@ services:
       # https://oauth2-proxy.github.io/oauth2-proxy/configuration/providers/openid_connect
       # https://oauth2-proxy.github.io/oauth2-proxy/configuration/providers/keycloak
       # https://oauth2-proxy.github.io/oauth2-proxy/configuration/providers/keycloak_oidc
+
+      # https://www.keycloak.org/server/reverseproxy
+      # OAUTH2_PROXY_REVERSE_PROXY: true
+      OAUTH2_PROXY_REVERSE_PROXY: false
 
       # Provider config
       OAUTH2_PROXY_SKIP_OIDC_DISCOVERY: true
@@ -201,8 +209,6 @@ services:
       # OAUTH2_PROXY_SKIP_AUTH_STRIP_HEADERS: false
       # OAUTH2_PROXY_SKIP_AUTH_PREFLIGHT: true
 
-      # OAUTH2_PROXY_REVERSE_PROXY: true
-      OAUTH2_PROXY_REVERSE_PROXY: false
       OAUTH2_PROXY_SILENCE_PING_LOGGING: true
 
       # Session storage
@@ -228,3 +234,10 @@ configs:
   hapi:
     file: ./hapi.application.yaml
     # file: hapi.application-fhir-au-core-1.0.0-preview.yaml
+
+# Open Issue
+# http://localhost:5001/realms/hapi-fhir-dev/account
+# Refused to frame 'http://keycloak:5001/' because it violates the following Content Security Policy directive: "frame-src 'self'".
+#
+# Refused to frame because an ancestor violates the following Content Security Policy directive: "frame-ancestors 'self'" -> https://github.com/keycloak/keycloak/issues/22491
+# Admin console not loading and hostname related issues -> https://github.com/keycloak/keycloak/issues/14666
