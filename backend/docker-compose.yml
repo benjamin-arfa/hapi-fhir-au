@@ -92,6 +92,7 @@ services:
       dockerfile: Dockerfile
     # restart: unless-stopped
     # environment:
+    env_file: ./modules/spring-cloud-gateway-server-mvc/.env
     ports:
       - ${OAUTH2_PROXY_PORT:-4180}:4180
     depends_on:
