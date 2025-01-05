@@ -1,23 +1,6 @@
-services:
+---
 
-  nginx:
-    container_name: nginx
-    build:
-      context: ./services/nginx
-      dockerfile: Dockerfile
-    # restart: unless-stopped
-    volumes:
-      - './nginx-default.conf.template:/etc/nginx/templates/default.conf.template'
-      - './devcerts:/etc/nginx/certs'
-    ports:
-      - 443:443
-      - 80:80
-    depends_on:
-      - hapi-fhir
-    networks:
-      - hapi_fhir_network
-    extra_hosts:
-      - 'host.docker.internal:host-gateway'
+services:
 
   postgres:
     container_name: postgres
@@ -38,8 +21,6 @@ services:
       POSTGRES_USER: ${POSTGRES_USER:-admin}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-secret}
     env_file: ./.env
-    networks:
-      - hapi_fhir_network
 
   redis:
     container_name: redis
@@ -56,8 +37,6 @@ services:
       timeout: 3s
     volumes:
       - cache:/data
-    networks:
-      - hapi_fhir_network
 
   keycloak:
     container_name: keycloak
@@ -110,8 +89,6 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-    networks:
-      - hapi_fhir_network
 
   hapi-fhir:
     container_name: hapi-fhir
@@ -134,8 +111,6 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-    networks:
-      - hapi_fhir_network
 
   oauth2-proxy:
     container_name: oauth2-proxy
@@ -159,8 +134,7 @@ services:
 
       # https://www.keycloak.org/server/reverseproxy
       OAUTH2_PROXY_REVERSE_PROXY: true
-      OAUTH2_PROXY_PASS_AUTHORIZATION_HEADER: true
-      OAUTH2_PROXY_PASS_ACCESS_TOKEN: true
+      # OAUTH2_PROXY_REVERSE_PROXY: false
 
       # Provider config
       OAUTH2_PROXY_SKIP_OIDC_DISCOVERY: true
@@ -180,7 +154,8 @@ services:
 
       OAUTH2_PROXY_REDIRECT_URL: ${PROTOCOL}://${OAUTH2_PROXY_HOSTNAME}:${OAUTH2_PROXY_PORT}/oauth2/callback
       OAUTH2_PROXY_UPSTREAMS: http://hapi-fhir:8080/
-      OAUTH2_PROXY_EMAIL_DOMAINS: '*'
+      # OAUTH2_PROXY_EMAIL_DOMAIN: "*"
+      OAUTH2_PROXY_EMAIL_DOMAINS: "*"
 
       # OAUTH2_PROXY_SKIP_OIDC_DISCOVERY: true
       OAUTH2_PROXY_LOGIN_URL: ${PROTOCOL}://127.0.0.1:${KEYCLOAK_PORT}/realms/${KEYCLOAK_REALM}/protocol/openid-connect/auth
@@ -193,7 +168,11 @@ services:
       OAUTH2_PROXY_CLIENT_ID: ${CLIENT_ID}
       OAUTH2_PROXY_CLIENT_SECRET: ${CLIENT_SECRET}
 
+      # https://devforum.okta.com/t/add-auth-to-any-app-with-oauth2-proxy/21255/13
+      # OAUTH2_PROXY_SCOPE: "openid profile email address phone offline_access"
       OAUTH2_PROXY_SCOPE: ${SCOPE}
+
+      OAUTH2_PROXY_PASS_ACCESS_TOKEN: true
 
       # Cookie configuration
       OAUTH2_PROXY_COOKIE_NAME: ${COOKIE_NAME}
@@ -212,6 +191,7 @@ services:
 
       OAUTH2_PROXY_HTTP_ADDRESS: 0.0.0.0:${OAUTH2_PROXY_PORT}
 
+
       # OAUTH2_PROXY_WHITELIST_DOMAINS: .${OAUTH2_PROXY_HOSTNAME}:${OAUTH2_PROXY_PORT}
       OAUTH2_PROXY_WHITELIST_DOMAINS: ${OAUTH2_PROXY_HOSTNAME}:${OAUTH2_PROXY_PORT}
       OAUTH2_PROXY_INSECURE_OIDC_ALLOW_UNVERIFIED_EMAIL: true
@@ -219,6 +199,9 @@ services:
       OAUTH2_PROXY_SSL_INSECURE_SKIP_VERIFY: true
       OAUTH2_PROXY_ERRORS_TO_INFO_LOG: true
       OAUTH2_PROXY_SHOW_DEBUG_ON_ERROR: true
+
+      # https://github.com/oauth2-proxy/oauth2-proxy/issues/628
+      OAUTH2_PROXY_PASS_AUTHORIZATION_HEADER: true
 
       # https://github.com/oauth2-proxy/oauth2-proxy/issues/2890
       # OAUTH2_PROXY_SKIP_JWT_BEARER_TOKENS: true
@@ -240,12 +223,6 @@ services:
         condition: service_healthy
       keycloak:
         condition: service_healthy
-    networks:
-      - hapi_fhir_network
-
-networks:
-  hapi_fhir_network:
-    driver: bridge
 
 volumes:
   postgres_data:

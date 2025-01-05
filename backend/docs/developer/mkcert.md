@@ -23,7 +23,7 @@ Create and install the certificate authority:
 mkcert -install
 ```
 
-Create and install the certificate authority:
+You should see something like::
 
 ```
 Created a new local CA 💥
@@ -31,3 +31,41 @@ Sudo password:
 The local CA is now installed in the system trust store! ⚡️
 The local CA is now installed in the Firefox trust store (requires browser restart)! 🦊
 ```
+
+Use `mkcert` to generate the certificates Nginx will use:
+
+```
+mkcert -key-file key.pem -cert-file cert.pem hapi-fhir.au.localhost
+```
+
+Move the files into the \backend\dev-certs directory:
+
+```
+.gitignore
+cert.pem
+key.pem
+```
+
+/etc/hosts:
+
+Update your `/etc/hosts` file:
+
+```
+sudo nano /etc/hosts
+```
+
+Add 'keycloak':
+
+```
+127.0.0.1  localhost keycloak hapi-fhir.au.localhost
+```
+
+**Note**: Remember that `mkcert` is meant for development purposes, not production, so it should not be used on end 
+users' machines, and that you should not export or share `rootCA-key.pem`.
+
+![divider](./divider.png)
+
+## ❯ References
+
+* GitHub: [mkcert](https://github.com/FiloSottile/mkcert)
+* okta Developer blog: [Three Ways to Run Your Java Locally with HTTPS](https://developer.okta.com/blog/2022/01/31/local-https-java)

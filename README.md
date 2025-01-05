@@ -26,6 +26,11 @@ Clone the project by running the following command:
 git clone git@github.com:Robinyo/hapi-fhir-au.git
 ``` 
 
+### mkcerts
+
+Follow the steps in the project's Developer Documentation for [mkcert](./backend/developer/mkcert.md) to create and 
+install a local certificate authority and to generate the certificates Nginx will use.
+
 ### Docker Compose
 
 With a single command, you can create and start all the services:
@@ -40,7 +45,7 @@ docker compose up
 To navigate to the HAPI FHIR **Welcome** page:
 
 ```
-http://localhost:4180
+https://hapi-fhir.au.localhost
 ```
 
 You should see something like:
@@ -52,7 +57,8 @@ You should see something like:
 To navigate to the Keycloak Admin console:
 
 ```
-http://localhost:5001
+# http://localhost:5001
+http://keycloak:5001/admin/master/console/
 ```
 
 You should see something like:
@@ -64,7 +70,8 @@ You should see something like:
 Navigate to the Keycloak Account Console:
 
 ```
-http://localhost:5001/realms/hapi-fhir-dev/account
+# http://localhost:5001/realms/hapi-fhir-dev/account
+http://keycloak:5001/realms/hapi-fhir-dev/account
 ```
 
 To stop the services:
@@ -119,22 +126,9 @@ Misc:
 
 ```
 docker container ps -a
+docker container ls
 docker image ls
 docker volume ls
-```
-
-/etc/hosts:
-
-Update your `/etc/hosts` file:
-
-```
-sudo nano /etc/hosts
-```
-
-Add 'keycloak':
-
-```
-127.0.0.1       localhost keycloak oauth2-proxy.oauth2-proxy.localhost oauth2-proxy.localhost
 ```
 
 ![divider](./divider.png)
