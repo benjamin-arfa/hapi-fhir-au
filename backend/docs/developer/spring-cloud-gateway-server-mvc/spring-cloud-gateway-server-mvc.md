@@ -90,3 +90,9 @@ You should receive a JSON-formatted message:
 ```
 
 To stop the server (Ctrl+c).
+
+## ❯ References
+
+* okta Developer blog: [Secure Legacy Apps with Spring Cloud Gateway](https://developer.okta.com/blog/2020/01/08/secure-legacy-spring-cloud-gateway)
+* okta Developer blog: [OAuth 2.0 Patterns with Spring Cloud Gateway](https://developer.okta.com/blog/2020/08/14/spring-gateway-patterns)
+* Eyal Sofer - AT&T Israel Tech blog: [Spring Cloud Gateway MVC — Migration from Reactive one](https://medium.com/att-israel/spring-cloud-gateway-mvc-migration-from-reactive-one-ed2025efc165)
