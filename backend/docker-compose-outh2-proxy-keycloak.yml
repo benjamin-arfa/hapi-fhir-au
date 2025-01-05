@@ -20,6 +20,7 @@ services:
       POSTGRES_DB: ${POSTGRES_DB:-hapi-fhir}
       POSTGRES_USER: ${POSTGRES_USER:-admin}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-secret}
+    env_file: ./.env
 
   redis:
     container_name: redis
@@ -48,10 +49,10 @@ services:
       interval: 5s
       timeout: 10s
       retries: 12
+    # '--log-level=INFO,io.vertx.ext.web.impl.RouterImpl:TRACE',
     command:
       [
         'start-dev',
-        '--log-level=INFO,io.vertx.ext.web.impl.RouterImpl:TRACE',
         '-Dkeycloak.migration.action=import',
         '-Dkeycloak.migration.provider=singleFile',
         '-Dkeycloak.migration.realmName=hapi-fhir-dev',
@@ -59,18 +60,27 @@ services:
         '-Dkeycloak.migration.file=/import/development-realm.json',
       ]
     environment:
-      KC_HOSTNAME: ${KEYCLOAK_HOSTNAME:-127.0.0.1}
+
+      # https://www.keycloak.org/server/reverseproxy
+
+      KC_HOSTNAME: ${KEYCLOAK_HOSTNAME:-keycloak}
       KC_HOSTNAME_PORT: ${KEYCLOAK_PORT:-5001}
+
+      KC_HOSTNAME_URL: ${PROTOCOL}://${KEYCLOAK_HOSTNAME}:${KEYCLOAK_PORT}
+      KC_HOSTNAME_ADMIN_URL: ${PROTOCOL}://${KEYCLOAK_HOSTNAME}:${KEYCLOAK_PORT}
+
       KC_HOSTNAME_STRICT_BACKCHANNEL: false
-      KC_HTTP_ENABLED: true
       KC_HOSTNAME_STRICT_HTTPS: false
-      KC_HEALTH_ENABLED: true
+      KC_HTTP_ENABLED: true
       KC_BOOTSTRAP_ADMIN_USERNAME: ${KEYCLOAK_ADMIN:-admin}
       KC_BOOTSTRAP_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-secret}
       KC_DB: postgres
       KC_DB_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB:-hapi-fhir}
       KC_DB_USERNAME: ${POSTGRES_USER:-admin}
       KC_DB_PASSWORD: ${POSTGRES_PASSWORD:-secret}
+      KC_HEALTH_ENABLED: true
+
+    env_file: ./.env
     ports:
       - ${KEYCLOAK_PORT:-5001}:8080
     volumes:
@@ -92,6 +102,9 @@ services:
       SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-secret}
       SPRING_DATASOURCE_DRIVERCLASSNAME: "org.postgresql.Driver"
       SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: "ca.uhn.fhir.jpa.model.dialect.HapiFhirPostgresDialect"
+    env_file: ./.env
+    expose:
+      - 8080
     configs:
       - source: hapi
         target: /app/config/application.yaml
@@ -119,6 +132,10 @@ services:
       # https://oauth2-proxy.github.io/oauth2-proxy/configuration/providers/keycloak
       # https://oauth2-proxy.github.io/oauth2-proxy/configuration/providers/keycloak_oidc
 
+      # https://www.keycloak.org/server/reverseproxy
+      # OAUTH2_PROXY_REVERSE_PROXY: true
+      OAUTH2_PROXY_REVERSE_PROXY: false
+
       # Provider config
       OAUTH2_PROXY_SKIP_OIDC_DISCOVERY: true
       OAUTH2_PROXY_PROVIDER: oidc
@@ -132,20 +149,28 @@ services:
       # AUTH2_PROXY_OIDC_EXTRA_AUDIENCE: ${CLIENT_ID}
       OAUTH2_PROXY_OIDC_EXTRA_AUDIENCE: account
 
+      OAUTH2_PROXY_OIDC_ISSUER_URL: ${PROTOCOL}://${KEYCLOAK_HOSTNAME}:8080/realms/${KEYCLOAK_REALM}
+      OAUTH2_PROXY_CODE_CHALLENGE_METHOD: S256
+
       OAUTH2_PROXY_REDIRECT_URL: ${PROTOCOL}://${OAUTH2_PROXY_HOSTNAME}:${OAUTH2_PROXY_PORT}/oauth2/callback
-      OAUTH2_PROXY_OIDC_ISSUER_URL: ${PROTOCOL}://${KEYCLOAK_HOSTNAME}:${KEYCLOAK_PORT}/realms/${KEYCLOAK_REALM}
-      OAUTH2_PROXY_UPSTREAMS: http://hapi-fhir
+      OAUTH2_PROXY_UPSTREAMS: http://hapi-fhir:8080/
       # OAUTH2_PROXY_EMAIL_DOMAIN: "*"
       OAUTH2_PROXY_EMAIL_DOMAINS: "*"
 
-      # OAUTH2_PROXY_CODE_CHALLENGE_METHOD: S256
+      # OAUTH2_PROXY_SKIP_OIDC_DISCOVERY: true
+      OAUTH2_PROXY_LOGIN_URL: ${PROTOCOL}://127.0.0.1:${KEYCLOAK_PORT}/realms/${KEYCLOAK_REALM}/protocol/openid-connect/auth
+      OAUTH2_PROXY_REDEEM_URL: ${PROTOCOL}://${KEYCLOAK_HOSTNAME}:8080/realms/${KEYCLOAK_REALM}/protocol/openid-connect/token
+      OAUTH2_PROXY_OIDC_JWKS_URL: ${PROTOCOL}://${KEYCLOAK_HOSTNAME}:8080/realms/${KEYCLOAK_REALM}/protocol/openid-connect/certs
+      OAUTH2_PROXY_PROFILE_URL: ${PROTOCOL}://${KEYCLOAK_HOSTNAME}:8080/realms/${KEYCLOAK_REALM}/protocol/openid-connect/userinfo
+      OAUTH2_PROXY_VALIDATE_URL: ${PROTOCOL}://${KEYCLOAK_HOSTNAME}:8080/realms/${KEYCLOAK_REALM}/protocol/openid-connect/userinfo
 
       # OAuth2 client configuration
       OAUTH2_PROXY_CLIENT_ID: ${CLIENT_ID}
       OAUTH2_PROXY_CLIENT_SECRET: ${CLIENT_SECRET}
 
       # https://devforum.okta.com/t/add-auth-to-any-app-with-oauth2-proxy/21255/13
-      OAUTH2_PROXY_SCOPE: "openid email profile offline_access"
+      # OAUTH2_PROXY_SCOPE: "openid profile email address phone offline_access"
+      OAUTH2_PROXY_SCOPE: ${SCOPE}
 
       OAUTH2_PROXY_PASS_ACCESS_TOKEN: true
 
@@ -175,36 +200,22 @@ services:
       OAUTH2_PROXY_ERRORS_TO_INFO_LOG: true
       OAUTH2_PROXY_SHOW_DEBUG_ON_ERROR: true
 
-
-      # OAUTH2_PROXY_SKIP_OIDC_DISCOVERY: true
-      OAUTH2_PROXY_LOGIN_URL: ${PROTOCOL}://${KEYCLOAK_HOSTNAME}:${KEYCLOAK_PORT}/realms/${KEYCLOAK_REALM}/protocol/openid-connect/auth
-      OAUTH2_PROXY_REDEEM_URL: ${PROTOCOL}://${KEYCLOAK_HOSTNAME}:${KEYCLOAK_PORT}/realms/${KEYCLOAK_REALM}/protocol/openid-connect/token
-      OAUTH2_PROXY_OIDC_JWKS_URL: ${PROTOCOL}://${KEYCLOAK_HOSTNAME}:${KEYCLOAK_PORT}/realms/${KEYCLOAK_REALM}/protocol/openid-connect/certs
-      OAUTH2_PROXY_PROFILE_URL: ${PROTOCOL}://${KEYCLOAK_HOSTNAME}:${KEYCLOAK_PORT}/realms/${KEYCLOAK_REALM}/protocol/openid-connect/userinfo
-      OAUTH2_PROXY_VALIDATE_URL: ${PROTOCOL}://${KEYCLOAK_HOSTNAME}:${KEYCLOAK_PORT}/realms/${KEYCLOAK_REALM}/protocol/openid-connect/userinfo
-
-
       # https://github.com/oauth2-proxy/oauth2-proxy/issues/628
       OAUTH2_PROXY_PASS_AUTHORIZATION_HEADER: true
 
-
-
       # https://github.com/oauth2-proxy/oauth2-proxy/issues/2890
-      OAUTH2_PROXY_SKIP_JWT_BEARER_TOKENS: true
-      OAUTH2_PROXY_SET_XAUTHREQUEST: true
-      OAUTH2_PROXY_SKIP_AUTH_STRIP_HEADERS: false
-      OAUTH2_PROXY_SKIP_AUTH_PREFLIGHT: true
+      # OAUTH2_PROXY_SKIP_JWT_BEARER_TOKENS: true
+      # OAUTH2_PROXY_SET_XAUTHREQUEST: true
+      # OAUTH2_PROXY_SKIP_AUTH_STRIP_HEADERS: false
+      # OAUTH2_PROXY_SKIP_AUTH_PREFLIGHT: true
 
-
-
-      # OAUTH2_PROXY_REVERSE_PROXY: true
-      OAUTH2_PROXY_REVERSE_PROXY: false
       OAUTH2_PROXY_SILENCE_PING_LOGGING: true
 
       # Session storage
       OAUTH2_PROXY_REDIS_CONNECTION_URL: redis://redis
       OAUTH2_PROXY_SESSION_STORE_TYPE: redis
 
+    env_file: ./.env
     ports:
       - ${OAUTH2_PROXY_PORT:-4180}:4180
     depends_on:
@@ -223,3 +234,10 @@ configs:
   hapi:
     file: ./hapi.application.yaml
     # file: hapi.application-fhir-au-core-1.0.0-preview.yaml
+
+# Open Issue
+# http://localhost:5001/realms/hapi-fhir-dev/account
+# Refused to frame 'http://keycloak:5001/' because it violates the following Content Security Policy directive: "frame-src 'self'".
+#
+# Refused to frame because an ancestor violates the following Content Security Policy directive: "frame-ancestors 'self'" -> https://github.com/keycloak/keycloak/issues/22491
+# Admin console not loading and hostname related issues -> https://github.com/keycloak/keycloak/issues/14666

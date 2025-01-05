@@ -134,7 +134,7 @@ sudo nano /etc/hosts
 Add 'keycloak':
 
 ```
-127.0.0.1       localhost keycloak
+127.0.0.1       localhost keycloak oauth2-proxy.oauth2-proxy.localhost oauth2-proxy.localhost
 ```
 
 ![divider](./divider.png)
@@ -150,6 +150,7 @@ Add 'keycloak':
 ## ❯ References
 
 * okta Developer blog: [OAuth for Java Developers](https://developer.okta.com/blog/2022/06/16/oauth-java)
+* OAuth.com: [OAuth 2.0 Playground](https://www.oauth.com/playground/?_gl=1*1fwid4n*_gcl_au*MjEyMTY2MzU4NS4xNzM1MDI2MjQ4*_ga*MTk3OTgwNDIxNS4xNzM1MDI2MjQ4*_ga_QKMSDV5369*MTczNjAyMjIyMS42LjEuMTczNjAyMjkyOS41Ny4wLjA.)
 * okta Developer blog: [Three Ways to Run Your Java Locally with HTTPS](https://developer.okta.com/blog/2022/01/31/local-https-java)
 * okta Developer blog: [Add Auth to Any App with OAuth2 Proxy](https://developer.okta.com/blog/2022/07/14/add-auth-to-any-app-with-oauth2-proxy)
 * okta Developer blog: [Secure Legacy Apps with Spring Cloud Gateway](https://developer.okta.com/blog/2020/01/08/secure-legacy-spring-cloud-gateway)
