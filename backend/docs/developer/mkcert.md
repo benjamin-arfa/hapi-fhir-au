@@ -32,7 +32,7 @@ The local CA is now installed in the system trust store! ⚡️
 The local CA is now installed in the Firefox trust store (requires browser restart)! 🦊
 ```
 
-Use `mkcert` to generate the certificates for the hostname `hapi-fhir.au.localhost`:
+Use `mkcert` to generate a key and a certificate for the hostname `hapi-fhir.au.localhost`:
 
 ```
 mkcert -key-file tls.key -cert-file tls.cert hapi-fhir.au.localhost
