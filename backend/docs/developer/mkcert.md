@@ -32,18 +32,24 @@ The local CA is now installed in the system trust store! ⚡️
 The local CA is now installed in the Firefox trust store (requires browser restart)! 🦊
 ```
 
-Use `mkcert` to generate the certificates Nginx will use:
+Use `mkcert` to generate the certificates for the hostname `hapi-fhir.au.localhost`:
 
 ```
-mkcert -key-file key.pem -cert-file cert.pem hapi-fhir.au.localhost
+mkcert -key-file tls.key -cert-file tls.cert hapi-fhir.au.localhost
 ```
 
-Move the files into the \backend\dev-certs directory:
+Move the files into the \backend\certs directory:
 
 ```
 .gitignore
-cert.pem
-key.pem
+tls.cert
+tls.key
+```
+
+Set the file permissions:
+
+```
+sudo chmod 655 ./certs/*
 ```
 
 /etc/hosts:
@@ -54,10 +60,10 @@ Update your `/etc/hosts` file:
 sudo nano /etc/hosts
 ```
 
-Add 'keycloak':
+Add the hostname:
 
 ```
-127.0.0.1  localhost keycloak hapi-fhir.au.localhost
+127.0.0.1 localhost hapi-fhir.au.localhost
 ```
 
 **Note**: Remember that `mkcert` is meant for development purposes, not production, so it should not be used on end 
@@ -68,4 +74,3 @@ users' machines, and that you should not export or share `rootCA-key.pem`.
 ## ❯ References
 
 * GitHub: [mkcert](https://github.com/FiloSottile/mkcert)
-* okta Developer blog: [Three Ways to Run Your Java Locally with HTTPS](https://developer.okta.com/blog/2022/01/31/local-https-java)

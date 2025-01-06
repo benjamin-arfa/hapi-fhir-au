@@ -21,7 +21,7 @@ docker container exec [name] printenv [variable]
 For example:
 
 ```
-docker container exec flowable printenv KEYCLOAK_ADMIN
+docker container exec hapi-fhir printenv KEYCLOAK_ADMIN
 ```
 
 To check the environment variables inside your container:
@@ -80,7 +80,7 @@ For example:
 ```
 docker container stop postgres
 docker container stop pgadmin
-docker container stop identity-server
+docker container stop keycloak
 docker container stop hapi-fhir
 ```
 
@@ -95,7 +95,7 @@ For example:
 ```
 docker container rm postgres
 docker container rm pgadmin
-docker container rm identity-server
+docker container rm keycloak
 docker container rm hapi-fhir
 ```
 
