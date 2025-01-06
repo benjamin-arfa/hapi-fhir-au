@@ -64,7 +64,6 @@ services:
 
       KC_HOSTNAME: ${KEYCLOAK_HOSTNAME}
 
-
       KC_HTTPS_CERTIFICATE_FILE: /etc/x509/https/tls.cert
       KC_HTTPS_CERTIFICATE_KEY_FILE: /etc/x509/https/tls.key
 
@@ -85,8 +84,8 @@ services:
 
     # Make sure the key and the certificate have the correct permissions -> e.g., sudo chmod 655 ./certs/*
     volumes:
-      - '${PWD}/certs/tls.key:/etc/x509/https/tls.key'
       - '${PWD}/certs/tls.cert:/etc/x509/https/tls.cert'
+      - '${PWD}/certs/tls.key:/etc/x509/https/tls.key'
       - '${PWD}/services/keycloak/scripts/health-check.sh:/opt/keycloak/health-check.sh'
       - '${PWD}:/import'
     depends_on:
