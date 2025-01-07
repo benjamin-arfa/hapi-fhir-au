@@ -26,10 +26,11 @@ Clone the project by running the following command:
 git clone git@github.com:Robinyo/hapi-fhir-au.git
 ``` 
 
-### mkcerts
+### Enable TLS
 
-Follow the steps in the project's Developer Documentation for [mkcert](./backend/developer/mkcert.md) to create and 
-install a local certificate authority and to generate the certificates Nginx will use.
+For local development, follow the steps in the project's Developer Documentation to use 
+[mkcert](./backend/docs/developer/mkcert.md) to create and install a local certificate authority and to generate the 
+certificates that the project will use.
 
 ### Docker Compose
 
@@ -59,6 +60,8 @@ To navigate to the Keycloak Admin console:
 ```
 # http://localhost:5001
 http://keycloak:5001/admin/master/console/
+https://hapi-fhir.au.localhost:5001/admin/master/console/
+https://hapi-fhir.au.localhost/auth
 ```
 
 You should see something like:
@@ -143,7 +146,21 @@ docker volume ls
 
 ## ❯ References
 
+### OAuth 2.0
+
 * okta Developer blog: [OAuth for Java Developers](https://developer.okta.com/blog/2022/06/16/oauth-java)
 * OAuth.com: [OAuth 2.0 Playground](https://www.oauth.com/playground/?_gl=1*1fwid4n*_gcl_au*MjEyMTY2MzU4NS4xNzM1MDI2MjQ4*_ga*MTk3OTgwNDIxNS4xNzM1MDI2MjQ4*_ga_QKMSDV5369*MTczNjAyMjIyMS42LjEuMTczNjAyMjkyOS41Ny4wLjA.)
-* okta Developer blog: [Three Ways to Run Your Java Locally with HTTPS](https://developer.okta.com/blog/2022/01/31/local-https-java)
 * okta Developer blog: [Add Auth to Any App with OAuth2 Proxy](https://developer.okta.com/blog/2022/07/14/add-auth-to-any-app-with-oauth2-proxy)
+
+### Keycloak
+
+* Keycloak guides: [Configuring Keycloak for production](https://www.keycloak.org/server/configuration-production)
+* Configuring TLS: [Configuring TLS](https://www.keycloak.org/server/enabletls)
+* Keycloak guides: [Configuring the hostname](https://www.keycloak.org/server/hostname)
+* Keycloak guides: [Using a reverse proxy](https://www.keycloak.org/server/reverseproxy)
+* packt book: [Keycloak – Identity and Access Management for Modern Applications](https://github.com/PacktPublishing/Keycloak---Identity-and-Access-Management-for-Modern-Applications-2nd-Edition)
+
+### OAuth2 Proxy
+
+* Keycloak guides: [Integration](https://oauth2-proxy.github.io/oauth2-proxy/configuration/integration)
+* Keycloak guides: [TLS Configuration](https://oauth2-proxy.github.io/oauth2-proxy/configuration/tls/)
