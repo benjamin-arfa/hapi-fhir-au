@@ -1,8 +1,5 @@
 services:
 
-  # https://hapi-fhir.au.localhost:8443
-  # https://hapi-fhir.au.localhost:9000/health/ready
-
   nginx:
     container_name: nginx
     build:
