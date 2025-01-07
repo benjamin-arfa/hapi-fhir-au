@@ -3,24 +3,6 @@ services:
   # https://hapi-fhir.au.localhost:8443
   # https://hapi-fhir.au.localhost:9000/health/ready
 
-  nginx:
-    container_name: nginx
-    build:
-      context: ./services/nginx
-      dockerfile: Dockerfile
-    # restart: unless-stopped
-    volumes:
-      - '${PWD}/services/nginx/conf/nginx-default.conf.template:/etc/nginx/templates/default.conf.template'
-      - '${PWD}/certs:/etc/nginx/certs'
-    ports:
-      - 443:443
-      - 80:80
-    depends_on:
-      postgres:
-        condition: service_healthy
-    extra_hosts:
-      - 'host.docker.internal:host-gateway'
-
   postgres:
     container_name: postgres
     build:
@@ -48,11 +30,10 @@ services:
       dockerfile: Dockerfile
     # restart: unless-stopped
     healthcheck:
-      test: ["CMD", "bash", "-c", "[ $(/opt/keycloak/bin/kcadm.sh get serverinfo --realm hapi-fhir-dev --fields '*' --server https://hapi-fhir.au.localhost:8443/admin/serverinfo 2>&1 | grep Unauthorized | wc -l ) -eq 1 ]"]
+      test: "bash /opt/keycloak/health-check.sh"
       interval: 5s
       timeout: 10s
-      retries: 20
-      start_period: 5s
+      retries: 12
 
     # 'start-dev',
 
@@ -68,7 +49,6 @@ services:
     command:
       [
         'start',
-        '--log-level=INFO,io.vertx.ext.web.impl.RouterImpl:TRACE',
         '-Dkeycloak.migration.action=import',
         '-Dkeycloak.migration.provider=singleFile',
         '-Dkeycloak.migration.realmName=hapi-fhir-dev',
@@ -83,13 +63,9 @@ services:
       # This is a security measure.
 
       KC_HOSTNAME: ${KEYCLOAK_HOSTNAME}
-      # If hostanme is specified, hostname-strict is effectively ignored
-      # KC_HOSTNAME_STRICT: false
 
       KC_HTTPS_CERTIFICATE_FILE: /etc/x509/https/tls.cert
       KC_HTTPS_CERTIFICATE_KEY_FILE: /etc/x509/https/tls.key
-
-      KC_PROXY_HEADERS: forwarded
 
       KC_BOOTSTRAP_ADMIN_USERNAME: ${KEYCLOAK_ADMIN:-admin}
       KC_BOOTSTRAP_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-secret}

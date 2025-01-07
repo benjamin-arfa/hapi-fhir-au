@@ -16,3 +16,4 @@ exit $ERROR
 # https://github.com/ubaid4j/api-gateway-with-multiple-oidc-clients
 # https://gist.github.com/sarath-soman/5d9aec06953bbd0990c648605d4dba07
 # https://stackoverflow.com/questions/75693830/keycloak-v21-docker-container-health-check-failing/78229437#78229437
+# https://stackoverflow.com/questions/53301299/add-healthcheck-in-keycloak-docker-swarm-service
