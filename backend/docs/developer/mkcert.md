@@ -35,15 +35,15 @@ The local CA is now installed in the Firefox trust store (requires browser resta
 Use `mkcert` to generate a key and a certificate for the hostname `hapi-fhir.au.localhost`:
 
 ```
-mkcert -key-file tls.key -cert-file tls.cert hapi-fhir.au.localhost
+mkcert -key-file key.pem -cert-file cert.pem hapi-fhir.au.localhost
 ```
 
 Move the files into the \backend\certs directory:
 
 ```
 .gitignore
-tls.cert
-tls.key
+cert.pem
+key.pem
 ```
 
 Set the file permissions:

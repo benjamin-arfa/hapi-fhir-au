@@ -28,9 +28,16 @@ git clone git@github.com:Robinyo/hapi-fhir-au.git
 
 ### Enable TLS
 
-For local development, follow the steps in the project's Developer Documentation to use 
+#### Local Development
+
+Follow the steps in the project's Developer Documentation to use 
 [mkcert](./backend/docs/developer/mkcert.md) to create and install a local certificate authority and to generate the 
-certificates that the project will use.
+certificates required to enable TLS.
+
+#### Production Deployment
+
+Follow the steps in the project's Developer Documentation to use
+[Let's Encrypt](./backend/docs/developer/lets-encrypt.md) to generate the certificates required to enable TLS.
 
 ### Docker Compose
 
@@ -58,10 +65,7 @@ You should see something like:
 To navigate to the Keycloak Admin console:
 
 ```
-# http://localhost:5001
-http://keycloak:5001/admin/master/console/
-https://hapi-fhir.au.localhost:5001/admin/master/console/
-https://hapi-fhir.au.localhost/auth
+https://hapi-fhir.au.localhost:8443/admin/master/console/
 ```
 
 You should see something like:
@@ -73,8 +77,7 @@ You should see something like:
 Navigate to the Keycloak Account Console:
 
 ```
-# http://localhost:5001/realms/hapi-fhir-dev/account
-http://keycloak:5001/realms/hapi-fhir-dev/account
+https://hapi-fhir.au.localhost:8443/realms/hapi-fhir-dev/account
 ```
 
 To stop the services:
@@ -156,6 +159,7 @@ docker volume ls
 
 * Keycloak guides: [Configuring Keycloak for production](https://www.keycloak.org/server/configuration-production)
 * Keycloak guides: [Configuring TLS](https://www.keycloak.org/server/enabletls)
+* Keycloak guides: [Configuring trusted certificates](https://www.keycloak.org/server/keycloak-truststore)
 * Keycloak guides: [Configuring the hostname](https://www.keycloak.org/server/hostname)
 * Keycloak guides: [Using a reverse proxy](https://www.keycloak.org/server/reverseproxy)
 * packt book: [Keycloak – Identity and Access Management for Modern Applications](https://github.com/PacktPublishing/Keycloak---Identity-and-Access-Management-for-Modern-Applications-2nd-Edition)

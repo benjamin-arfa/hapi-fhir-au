@@ -21,7 +21,7 @@ docker container exec [name] printenv [variable]
 For example:
 
 ```
-docker container exec hapi-fhir printenv KEYCLOAK_ADMIN
+docker container exec hapi-fhir printenv KC_HOSTNAME
 ```
 
 To check the environment variables inside your container:

@@ -84,8 +84,8 @@ services:
 
     # Make sure the key and the certificate have the correct permissions -> e.g., sudo chmod 655 ./certs/*
     volumes:
-      - '${PWD}/certs/tls.cert:/etc/x509/https/tls.cert'
-      - '${PWD}/certs/tls.key:/etc/x509/https/tls.key'
+      - '${PWD}/certs/cert.pem:/etc/x509/https/cert.pem'
+      - '${PWD}/certs/key.pem:/etc/x509/https/key.pem'
       - '${PWD}/services/keycloak/scripts/health-check.sh:/opt/keycloak/health-check.sh'
       - '${PWD}:/import'
     depends_on:

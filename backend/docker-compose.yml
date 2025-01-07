@@ -45,7 +45,7 @@ services:
       dockerfile: Dockerfile
     # restart: unless-stopped
     healthcheck:
-      test: ["CMD", "bash", "-c", "[ $(/opt/keycloak/bin/kcadm.sh get serverinfo --realm hapi-fhir-dev --fields '*' --server https://hapi-fhir.au.localhost:8443/admin/serverinfo 2>&1 | grep Unauthorized | wc -l ) -eq 1 ]"]
+      test: ["CMD", "bash", "-c", "[ $(/opt/keycloak/bin/kcadm.sh get serverinfo --server https://hapi-fhir.au.localhost:8443 --realm hapi-fhir-dev --fields '*' --server https://hapi-fhir.au.localhost:8443/admin/serverinfo 2>&1 | grep Unauthorized | wc -l ) -eq 1 ]"]
       interval: 5s
       timeout: 10s
       retries: 20
@@ -83,8 +83,12 @@ services:
       # If hostanme is specified, hostname-strict is effectively ignored
       # KC_HOSTNAME_STRICT: false
 
-      KC_HTTPS_CERTIFICATE_FILE: /etc/x509/https/tls.cert
-      KC_HTTPS_CERTIFICATE_KEY_FILE: /etc/x509/https/tls.key
+      KC_HTTPS_CERTIFICATE_FILE: /etc/x509/https/cert.pem
+      KC_HTTPS_CERTIFICATE_KEY_FILE: /etc/x509/https/key.pem
+
+      # https://www.keycloak.org/server/keycloak-truststore
+      # KC_TRUSTSTORE_PATHS: /etc/x509/https/cert.pem,/etc/x509/https/key.pem
+      # - '${PWD}/certs/key.pem:/opt/keycloak/conf/truststores'
 
       KC_PROXY_HEADERS: forwarded
 
@@ -105,9 +109,9 @@ services:
 
     # Make sure the key and the certificate have the correct permissions -> e.g., sudo chmod 655 ./certs/*
     volumes:
-      - '${PWD}/certs/tls.cert:/etc/x509/https/tls.cert'
-      - '${PWD}/certs/tls.key:/etc/x509/https/tls.key'
-      - '${PWD}/services/keycloak/scripts/health-check.sh:/opt/keycloak/health-check.sh'
+      - '${PWD}/certs/cert.pem:/etc/x509/https/cert.pem'
+      - '${PWD}/certs/key.pem:/etc/x509/https/key.pem'
+      - '${PWD}/certs:/opt/keycloak/conf/truststores'
       - '${PWD}:/import'
     depends_on:
       postgres:

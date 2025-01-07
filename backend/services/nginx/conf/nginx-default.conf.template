@@ -10,8 +10,8 @@ server {
   listen 443 ssl;
   server_name hapi-fhir.au.localhost;
 
-  ssl_certificate /etc/nginx/certs/tls.cert;
-  ssl_certificate_key /etc/nginx/certs/tls.key;
+  ssl_certificate /etc/nginx/certs/cert.pem;
+  ssl_certificate_key /etc/nginx/certs/key.pem;
 
   location /keycloak/ {
     proxy_pass        https://keycloak:8443/;
