@@ -155,7 +155,7 @@ docker volume ls
 ### Keycloak
 
 * Keycloak guides: [Configuring Keycloak for production](https://www.keycloak.org/server/configuration-production)
-* Configuring TLS: [Configuring TLS](https://www.keycloak.org/server/enabletls)
+* Keycloak guides: [Configuring TLS](https://www.keycloak.org/server/enabletls)
 * Keycloak guides: [Configuring the hostname](https://www.keycloak.org/server/hostname)
 * Keycloak guides: [Using a reverse proxy](https://www.keycloak.org/server/reverseproxy)
 * packt book: [Keycloak – Identity and Access Management for Modern Applications](https://github.com/PacktPublishing/Keycloak---Identity-and-Access-Management-for-Modern-Applications-2nd-Edition)
