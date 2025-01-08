@@ -1,7 +1,8 @@
-services:
 
-  # https://hapi-fhir.au.localhost:8443
-  # https://hapi-fhir.au.localhost:9000/health/ready
+# https://hapi-fhir.au.localhost:8443
+# https://hapi-fhir.au.localhost:9000/health/ready
+
+services:
 
   postgres:
     container_name: postgres
@@ -29,12 +30,6 @@ services:
       context: ./services/keycloak
       dockerfile: Dockerfile
     # restart: unless-stopped
-    healthcheck:
-      test: "bash /opt/keycloak/health-check.sh"
-      interval: 5s
-      timeout: 10s
-      retries: 12
-
     # 'start-dev',
 
     #  'start',
@@ -63,9 +58,17 @@ services:
       # This is a security measure.
 
       KC_HOSTNAME: ${KEYCLOAK_HOSTNAME}
+      # If hostanme is specified, hostname-strict is effectively ignored
+      # KC_HOSTNAME_STRICT: false
 
-      KC_HTTPS_CERTIFICATE_FILE: /etc/x509/https/tls.cert
-      KC_HTTPS_CERTIFICATE_KEY_FILE: /etc/x509/https/tls.key
+      KC_HTTPS_CERTIFICATE_FILE: /etc/x509/https/cert.pem
+      KC_HTTPS_CERTIFICATE_KEY_FILE: /etc/x509/https/key.pem
+
+      # https://www.keycloak.org/server/keycloak-truststore
+      # KC_TRUSTSTORE_PATHS: /etc/x509/https/cert.pem,/etc/x509/https/key.pem
+      # - '${PWD}/certs/key.pem:/opt/keycloak/conf/truststores'
+
+      KC_PROXY_HEADERS: forwarded
 
       KC_BOOTSTRAP_ADMIN_USERNAME: ${KEYCLOAK_ADMIN:-admin}
       KC_BOOTSTRAP_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-secret}
@@ -86,7 +89,7 @@ services:
     volumes:
       - '${PWD}/certs/cert.pem:/etc/x509/https/cert.pem'
       - '${PWD}/certs/key.pem:/etc/x509/https/key.pem'
-      - '${PWD}/services/keycloak/scripts/health-check.sh:/opt/keycloak/health-check.sh'
+      - '${PWD}/certs:/opt/keycloak/conf/truststores'
       - '${PWD}:/import'
     depends_on:
       postgres:
