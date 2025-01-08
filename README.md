@@ -65,6 +65,7 @@ You should see something like:
 To navigate to the Keycloak Admin console:
 
 ```
+# https://hapi-fhir.au.localhost:8443
 https://hapi-fhir.au.localhost:8443/admin/master/console/
 ```
 

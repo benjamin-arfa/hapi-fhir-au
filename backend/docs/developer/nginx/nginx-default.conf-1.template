@@ -1,33 +1,32 @@
-# https://smilecdr.com/docs/product_configuration/http_server_setup.html#reverse-proxying-with-nginx-1
-
-#######################################
-# Redirect http to https
-#######################################
+# https://docs.kailona.org/docs/guides/setup-fhir-server/
 
 server {
-
-  server_name hapi-fhir.au.localhost;
   listen 80;
-  include /etc/nginx/conf/ssl.conf;
+  server_name hapi-fhir.au.localhost;
   return 301 https://$host$request_uri;
-
 }
 
 server {
 
+  listen 443 ssl;
   server_name hapi-fhir.au.localhost;
-  listen 443 ssl default_server;
-  include /etc/nginx/conf/ssl.conf;
+  server_tokens off;
+
+  ssl_certificate /etc/nginx/certs/cert.pem;
+  ssl_certificate_key /etc/nginx/certs/key.pem;
 
   location / {
-    proxy_set_header    Host                        $host;
-    proxy_set_header    X-Real-IP                   $remote_addr;
-    proxy_set_header    X-Forwarded-For             $proxy_add_x_forwarded_for;
-    proxy_set_header    X-Forwarded-Host   $host:443;
-    proxy_set_header    X-Forwarded-Server $host;
-    proxy_set_header    X-Forwarded-Port   443;
-    proxy_set_header    X-Forwarded-Proto  https;
-    proxy_pass          http://hapi-fhir:8080/;
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $remote_addr;
+    proxy_set_header X-Forwarded-Proto https;
+    proxy_set_header X-Forwarded-Port 443;
+
+    proxy_buffer_size 64k;
+    proxy_buffers 8 64k;
+    proxy_busy_buffers_size 64k;
+
+    proxy_pass http://hapi-fhir:9080;
   }
 
   location /keycloak/ {
@@ -54,4 +53,6 @@ server {
 
 }
 
-
+# https://github.com/jinnerbichler/keycloak-nginx/blob/master/nginx.conf
+# https://www.keycloak.org/server/reverseproxy
+# https://skycloak.io/blog/how-to-run-keycloak-behind-a-reverse-proxy/

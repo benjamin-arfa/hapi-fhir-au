@@ -7,16 +7,32 @@ services:
       dockerfile: Dockerfile
     # restart: unless-stopped
     volumes:
+      - '${PWD}/services/nginx/conf/ssl.conf:/etc/nginx/conf/ssl.conf'
       - '${PWD}/services/nginx/conf/nginx-default.conf.template:/etc/nginx/templates/default.conf.template'
       - '${PWD}/certs:/etc/nginx/certs'
     ports:
-      - 443:443
       - 80:80
+      - 443:443
     depends_on:
-      postgres:
-        condition: service_healthy
+      - hapi-fhir
     extra_hosts:
       - 'host.docker.internal:host-gateway'
+
+  redis:
+    container_name: redis
+    build:
+      context: ./services/redis
+      dockerfile: Dockerfile
+    command: --save 60 1 --loglevel warning
+    # restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 3s
+    volumes:
+      - cache:/data
 
   postgres:
     container_name: postgres
@@ -74,7 +90,7 @@ services:
       # This is a security measure.
 
       KC_HOSTNAME: ${KEYCLOAK_HOSTNAME}
-      # If hostanme is specified, hostname-strict is effectively ignored
+      # If KC_HOSTNAME is specified, KC_HOSTNAME_STRICT is effectively ignored
       # KC_HOSTNAME_STRICT: false
 
       KC_HTTPS_CERTIFICATE_FILE: /etc/x509/https/cert.pem
@@ -111,8 +127,32 @@ services:
       postgres:
         condition: service_healthy
 
+  hapi-fhir:
+    container_name: hapi-fhir
+    build:
+      context: ./services/hapi-fhir
+      dockerfile: Dockerfile
+    # restart: unless-stopped
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB:-hapi-fhir}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER:-admin}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-secret}
+      SPRING_DATASOURCE_DRIVERCLASSNAME: "org.postgresql.Driver"
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: "ca.uhn.fhir.jpa.model.dialect.HapiFhirPostgresDialect"
+    env_file: ./.env
+    expose:
+      - 80:80
+    configs:
+      - source: hapi
+        target: /app/config/application.yaml
+    depends_on:
+      postgres:
+        condition: service_healthy
+
 volumes:
   postgres_data:
+    driver: local
+  cache:
     driver: local
 
 configs:
