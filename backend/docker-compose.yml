@@ -43,6 +43,7 @@ services:
     build:
       context: ./services/keycloak
       dockerfile: Dockerfile
+
     # restart: unless-stopped
     # 'start-dev',
 
