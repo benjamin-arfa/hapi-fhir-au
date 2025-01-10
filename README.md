@@ -139,7 +139,7 @@ docker compose up
 
 ##### Import
 
-Keycloak will **import** the `hapi-fhir-dev` realm when it starts up:
+Keycloak will import the `hapi-fhir-dev` realm when it starts up:
 
 ```
   keycloak:
