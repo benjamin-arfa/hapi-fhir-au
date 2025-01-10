@@ -136,8 +136,7 @@ docker compose stop
 docker compose -f docker-compose-keycloak-realm-export.yml up
 docker compose -f docker-compose-keycloak-realm-export.yml stop
 docker compose -f docker-compose-keycloak-realm-export.yml down
-docker volume rm backend_postgres_data
-docker volume rm backend_cache
+docker compose up
 ```
 
 Check the logs:
