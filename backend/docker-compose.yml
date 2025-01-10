@@ -118,7 +118,7 @@ services:
       - 8443:8443
       - 9000:9000
 
-    # Make sure the certificate and the key (the .pem files) have the correct permissions -> e.g., sudo chmod 655 ./certs/*
+    # Make sure the certificate and the key (the *.pem files) have the correct permissions -> e.g., sudo chmod 655 ./certs/*
     volumes:
       - '${PWD}/services/keycloak/scripts/health-check.sh:/opt/keycloak/health-check.sh'
       - '${PWD}/certs/keycloak-cert.pem:/etc/x509/https/cert.pem'
@@ -188,6 +188,7 @@ services:
       # Provider config
       # OIDC discovery will fail unless a Keycloak Health Check is enabled and oauth2-proxy depends_on the keycloak
       # service being healthy.
+      # OAUTH2_PROXY_SKIP_PROVIDER_BUTTON: true
       # OAUTH2_PROXY_SKIP_OIDC_DISCOVERY: true
       OAUTH2_PROXY_PROVIDER: oidc
       OAUTH2_PROXY_PROVIDER_DISPLAY_NAME: OpenID Connect
