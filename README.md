@@ -53,7 +53,6 @@ docker compose up
 To navigate to the HAPI FHIR **Welcome** page:
 
 ```
-# https://hapi-fhir.au.localhost/oauth2/callback
 https://hapi-fhir.au.localhost
 ```
 
