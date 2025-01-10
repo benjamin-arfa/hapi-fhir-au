@@ -125,9 +125,7 @@ docker volume rm backend_postgres_data
 docker volume rm backend_cache
 ```
 
-### Miscellaneous
-
-#### Export
+##### Export
 
 To export the `hapi-fhir-dev` realm to a single file (development-realm.json):
 
@@ -138,6 +136,29 @@ docker compose -f docker-compose-keycloak-realm-export.yml stop
 docker compose -f docker-compose-keycloak-realm-export.yml down
 docker compose up
 ```
+
+##### Import
+
+Keycloak will **import** the `hapi-fhir-dev` realm when it starts up:
+
+```
+  keycloak:
+    container_name: keycloak
+    
+    ...
+
+    command:
+      [
+        'start',
+        '-Dkeycloak.migration.action=import',
+        '-Dkeycloak.migration.provider=singleFile',
+        '-Dkeycloak.migration.realmName=hapi-fhir-dev',
+        '-Dkeycloak.migration.strategy=OVERWRITE_EXISTING',
+        '-Dkeycloak.migration.file=/import/development-realm.json',
+      ]
+```
+
+### Miscellaneous
 
 Check the logs:
 
