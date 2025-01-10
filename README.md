@@ -34,11 +34,6 @@ Follow the steps in the project's Developer Documentation to use
 [mkcert](./backend/docs/developer/mkcert.md) to create and install a local certificate authority and to generate the 
 certificates required to enable TLS.
 
-#### Production Deployment
-
-Follow the steps in the project's Developer Documentation to use
-[Let's Encrypt](./backend/docs/developer/lets-encrypt.md) to generate the certificates required to enable TLS.
-
 ### Docker Compose
 
 With a single command, you can create and start all the services:
