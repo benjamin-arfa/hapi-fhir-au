@@ -57,13 +57,13 @@ You should see something like:
   <img src="./docs/quick-start-guide/oauth2-proxy-sign-in.png" alt="Sign in with OpenID Connect"/>
 </p>
 
-Click the 'Sign in with OpenID Connect' button:
+Click the 'Sign in with OpenID Connect' button (and sign in to HAPI FHIR using the OIDC Authorization Code flow):
 
 <p align="center">
   <img src="./docs/quick-start-guide/keycloak-sign-in.png" alt="Sign in with your Keycloak Account"/>
 </p>
 
-Enter your username and password then click the Sign in button:
+Enter your username (hey@rob-ferguson.me) and password (secret) then click the Sign in button:
 
 You should see something like:
 
@@ -79,7 +79,7 @@ Your connection is secure:
 
 #### Keycloak
 
-To navigate to the Keycloak Admin console:
+To navigate to the Keycloak Admin console (username: admin and password: secret):
 
 ```
 https://keycloak:8443
