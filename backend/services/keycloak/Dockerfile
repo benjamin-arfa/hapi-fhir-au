@@ -1,7 +1,14 @@
-FROM quay.io/keycloak/keycloak:26.0.7
+FROM registry.access.redhat.com/ubi9 AS ubi-micro-build
 
-# COPY /certs/tls.cert /opt/keycloak/tls.cert
-# COPY /certs/tls.key /opt/keycloak/tls.key
+RUN mkdir -p /mnt/rootfs
+RUN dnf install --installroot /mnt/rootfs curl jq \
+    --releasever 9 --setopt install_weak_deps=false --nodocs -y && \
+    dnf --installroot /mnt/rootfs clean all && \
+    rpm --root /mnt/rootfs -e --nodeps setup
 
-# COPY /scripts/health-check.sh /opt/keycloak/health-check.sh
-# RUN chmod +x /opt/keycloak/health-check.sh
+FROM quay.io/keycloak/keycloak
+
+COPY --from=ubi-micro-build /mnt/rootfs /
+
+# FROM quay.io/keycloak/keycloak:26.0.7
+# https://www.keycloak.org/server/containers

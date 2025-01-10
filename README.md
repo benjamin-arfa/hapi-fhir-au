@@ -53,6 +53,7 @@ docker compose up
 To navigate to the HAPI FHIR **Welcome** page:
 
 ```
+# https://hapi-fhir.au.localhost/oauth2/callback
 https://hapi-fhir.au.localhost
 ```
 
@@ -65,8 +66,8 @@ You should see something like:
 To navigate to the Keycloak Admin console:
 
 ```
-# https://hapi-fhir.au.localhost:8443
-https://hapi-fhir.au.localhost:8443/admin/master/console/
+https://hapi-fhir.au.localhost:8443
+# https://hapi-fhir.au.localhost:8443/admin/master/console/
 ```
 
 You should see something like:
@@ -112,7 +113,7 @@ docker compose -f docker-compose-keycloak-realm-export.yml up
 docker compose -f docker-compose-keycloak-realm-export.yml stop
 docker compose -f docker-compose-keycloak-realm-export.yml down
 docker volume rm backend_postgres_data
-# docker volume rm backend_cache
+docker volume rm backend_cache
 ```
 
 Check the logs:
@@ -163,7 +164,7 @@ docker volume ls
 * Keycloak guides: [Configuring trusted certificates](https://www.keycloak.org/server/keycloak-truststore)
 * Keycloak guides: [Configuring the hostname](https://www.keycloak.org/server/hostname)
 * Keycloak guides: [Using a reverse proxy](https://www.keycloak.org/server/reverseproxy)
-* packt book: [Keycloak – Identity and Access Management for Modern Applications](https://github.com/PacktPublishing/Keycloak---Identity-and-Access-Management-for-Modern-Applications-2nd-Edition)
+* Keycloak guides: [Running Keycloak in a container](https://www.keycloak.org/server/containers)
 
 ### OAuth2 Proxy
 

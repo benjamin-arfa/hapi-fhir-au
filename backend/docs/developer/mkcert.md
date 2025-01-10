@@ -36,17 +36,10 @@ Use `mkcert` to generate a key and a certificate for the hostname `hapi-fhir.au.
 
 ```
 mkcert -key-file key.pem -cert-file cert.pem hapi-fhir.au.localhost
+mkcert -key-file keycloak-key.pem -cert-file keycloak-cert.pem keycloak
 ```
 
-Move the files into the \backend\certs directory:
-
-```
-.gitignore
-cert.pem
-key.pem
-```
-
-Set the file permissions:
+Move the files into the \backend\certs directory and set the file permissions:
 
 ```
 sudo chmod 655 ./certs/*
@@ -63,7 +56,7 @@ sudo nano /etc/hosts
 Add the hostname:
 
 ```
-127.0.0.1 localhost hapi-fhir.au.localhost
+127.0.0.1 localhost hapi-fhir.au.localhost keycloak
 ```
 
 **Note**: Remember that `mkcert` is meant for development purposes, not production, so it should not be used on end 
