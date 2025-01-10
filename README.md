@@ -71,6 +71,14 @@ You should see something like:
   <img src="./docs/quick-start-guide/hapi-fhir-welcome-page.png" alt="HAPI FHIR Welcome page"/>
 </p>
 
+Your connection is secure:
+
+<p align="center">
+  <img src="./docs/quick-start-guide/your-connection-is-secure.png" alt="HAPI FHIR Welcome page"/>
+</p>
+
+#### Keycloak
+
 To navigate to the Keycloak Admin console:
 
 ```
