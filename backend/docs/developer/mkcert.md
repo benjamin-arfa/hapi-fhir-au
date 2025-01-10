@@ -2,8 +2,6 @@
 
 mkcert is a simple tool for making locally-trusted development certificates. It requires no configuration.
 
-## Build Management
-
 ### Create a certificate authority with mkcert
 
 mkcert sets up a locally trusted Certificate Authority (CA), installed into the trust stores on your computer. 
