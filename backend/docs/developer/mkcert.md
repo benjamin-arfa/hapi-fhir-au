@@ -50,7 +50,7 @@ Update your `/etc/hosts` file:
 sudo nano /etc/hosts
 ```
 
-Add the hostnames, `localhost hapi-fhir.au.localhost` and `keycloak`:
+Add the hostnames, `hapi-fhir.au.localhost` and `keycloak`:
 
 ```
 127.0.0.1 localhost hapi-fhir.au.localhost keycloak
