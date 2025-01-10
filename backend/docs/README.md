@@ -5,6 +5,7 @@
   * [Working with PostgreSQL](./administrator/postgres.md)
   * [Working with Keycloak](./administrator/keycloak.md)
 * Developer Documentation
-  * [Spring Cloud Gateway Server MVC](./developer/spring-cloud-gateway-server-mvc/spring-cloud-gateway-server-mvc.md)
   * [mkcert](./developer/mkcert.md)
   * [Let's Encrypt](./developer/lets-encrypt.md)
+* Spring Cloud Gateway Documentation
+  * [Spring Cloud Gateway Server MVC](./developer/spring-cloud-gateway-server-mvc/spring-cloud-gateway-server-mvc.md)
