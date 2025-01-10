@@ -66,8 +66,7 @@ You should see something like:
 To navigate to the Keycloak Admin console:
 
 ```
-https://hapi-fhir.au.localhost:8443
-# https://hapi-fhir.au.localhost:8443/admin/master/console/
+https://keycloak:8443
 ```
 
 You should see something like:
@@ -79,7 +78,7 @@ You should see something like:
 Navigate to the Keycloak Account Console:
 
 ```
-https://hapi-fhir.au.localhost:8443/realms/hapi-fhir-dev/account
+https://keycloak:8443/realms/hapi-fhir-dev/account
 ```
 
 To stop the services:
