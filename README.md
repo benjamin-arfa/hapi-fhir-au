@@ -43,9 +43,9 @@ cd ~/workspace/hapi-fhir-au/backend
 docker compose up
 ```
 
-**Note:** Docker Compose will look for a `.env` file in the current working directory.
+**Note:** Docker Compose will look for an `.env` file in the current working directory.
 
-To navigate to the HAPI FHIR **Welcome** page:
+Sign in:
 
 ```
 https://hapi-fhir.au.localhost
@@ -54,7 +54,21 @@ https://hapi-fhir.au.localhost
 You should see something like:
 
 <p align="center">
-  <img src="./docs/quick-start-guide/hapi-fhir-welcome-page.png" alt="Welcome page"/>
+  <img src="./docs/quick-start-guide/oauth2-proxy-sign-in.png" alt="Sign in with OpenID Connect"/>
+</p>
+
+Click the 'Sign in with OpenID Connect' button:
+
+<p align="center">
+  <img src="./docs/quick-start-guide/keycloak-sign-in.png" alt="Sign in with your Keycloak Account"/>
+</p>
+
+Enter your username and password then click the Sign in button:
+
+You should see something like:
+
+<p align="center">
+  <img src="./docs/quick-start-guide/hapi-fhir-welcome-page.png" alt="HAPI FHIR Welcome page"/>
 </p>
 
 To navigate to the Keycloak Admin console:
@@ -74,6 +88,13 @@ Navigate to the Keycloak Account Console:
 ```
 https://keycloak:8443/realms/hapi-fhir-dev/account
 ```
+
+You should see something like:
+
+<p align="center">
+  <img src="./docs/quick-start-guide/keycloak-account-welcome-page.png" alt="Welcome page"/>
+</p>
+
 
 To stop the services:
 

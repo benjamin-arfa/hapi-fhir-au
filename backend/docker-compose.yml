@@ -8,7 +8,7 @@ services:
     # restart: unless-stopped
     volumes:
       - '${PWD}/services/nginx/conf/ssl.conf:/etc/nginx/conf/ssl.conf'
-      - '${PWD}/services/nginx/conf/keycloak-ssl.conf:/etc/nginx/conf/keycloak-ssl.conf'
+      # - '${PWD}/services/nginx/conf/keycloak-ssl.conf:/etc/nginx/conf/keycloak-ssl.conf'
       - '${PWD}/services/nginx/conf/nginx-default.conf.template:/etc/nginx/templates/default.conf.template'
       - '${PWD}/certs:/etc/nginx/certs'
     ports:
@@ -105,8 +105,10 @@ services:
       # If KC_HOSTNAME is specified, KC_HOSTNAME_STRICT is effectively ignored
       # KC_HOSTNAME_STRICT: false
 
-      KC_HTTPS_CERTIFICATE_FILE: /etc/x509/https/keycloak-cert.pem
-      KC_HTTPS_CERTIFICATE_KEY_FILE: /etc/x509/https/keycloak-key.pem
+      KC_HTTPS_CERTIFICATE_FILE: /etc/x509/https/cert.pem
+      KC_HTTPS_CERTIFICATE_KEY_FILE: /etc/x509/https/key.pem
+      # KC_HTTPS_CERTIFICATE_FILE: /etc/x509/https/keycloak-cert.pem
+      # KC_HTTPS_CERTIFICATE_KEY_FILE: /etc/x509/https/keycloak-key.pem
 
       KC_PROXY_HEADERS: forwarded
 
@@ -128,8 +130,10 @@ services:
     # Make sure the key and the certificate have the correct permissions -> e.g., sudo chmod 655 ./certs/*
     volumes:
       - '${PWD}/services/keycloak/scripts/health-check.sh:/opt/keycloak/health-check.sh'
-      - '${PWD}/certs/keycloak-cert.pem:/etc/x509/https/keycloak-cert.pem'
-      - '${PWD}/certs/keycloak-key.pem:/etc/x509/https/keycloak-key.pem'
+      - '${PWD}/certs/keycloak-cert.pem:/etc/x509/https/cert.pem'
+      - '${PWD}/certs/keycloak-key.pem:/etc/x509/https/key.pem'
+      # - '${PWD}/certs/keycloak-cert.pem:/etc/x509/https/keycloak-cert.pem'
+      # - '${PWD}/certs/keycloak-key.pem:/etc/x509/https/keycloak-key.pem'
       - '${PWD}/certs:/opt/keycloak/conf/truststores'
       - '${PWD}:/import'
     depends_on:
