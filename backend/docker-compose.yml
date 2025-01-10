@@ -67,8 +67,7 @@ services:
       dockerfile: Dockerfile
     # restart: unless-stopped
     healthcheck:
-      # test: ["CMD-SHELL", "/opt/keycloak/health-check.sh"]
-      test: "bash /opt/keycloak/health-check.sh"
+      test: ["CMD-SHELL", "/opt/keycloak/health-check.sh"]
       start_period: 10s
       interval: 30s
       retries: 5
