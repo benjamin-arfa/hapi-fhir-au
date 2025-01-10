@@ -64,7 +64,7 @@ Add the hostnames:
 **Note**: Remember that `mkcert` is meant for development purposes, not production, so it should not be used on end 
 users' machines, and that you should not export or share `rootCA-key.pem`.
 
-![divider](./divider.png)
+![divider](.././divider.png)
 
 ## ❯ References
 
