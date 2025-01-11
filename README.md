@@ -210,6 +210,10 @@ docker volume ls
 * Keycloak guides: [Using a reverse proxy](https://www.keycloak.org/server/reverseproxy)
 * Keycloak guides: [Running Keycloak in a container](https://www.keycloak.org/server/containers)
 
+### Nginx
+
+* Nginx docs: [Authentication Based on Subrequest Result](https://docs.nginx.com/nginx/admin-guide/security-controls/configuring-subrequest-authentication/)
+
 ### OAuth2 Proxy
 
 * Keycloak guides: [Integration](https://oauth2-proxy.github.io/oauth2-proxy/configuration/integration)
