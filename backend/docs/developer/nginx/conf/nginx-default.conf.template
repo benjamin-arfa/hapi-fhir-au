@@ -4,7 +4,6 @@ server {
   server_name hapi-fhir.au.localhost;
   listen 80;
   include /etc/nginx/conf/ssl.conf;
-
   return 301 https://$host$request_uri;
 
 }
@@ -12,35 +11,29 @@ server {
 server {
 
   server_name hapi-fhir.au.localhost;
+  # listen 443 ssl default_server;
   listen 443 ssl default_server;
   include /etc/nginx/conf/ssl.conf;
 
   location /oauth2/ {
-    proxy_pass             http://oauth2-proxy:4180;
-    proxy_set_header       Host                    $host;
-    proxy_set_header       X-Real-IP               $remote_addr;
-    proxy_set_header       X-Auth-Request-Redirect $request_uri;
-  }
-
-  location /private/ {
-    auth_request           /oauth2/auth;
-    auth_request_set       $auth_status $upstream_status;
+    proxy_pass       http://oauth2-proxy:4180;
+    proxy_set_header Host                    $host;
+    proxy_set_header X-Real-IP               $remote_addr;
+    # proxy_set_header X-Scheme                $scheme;
+    proxy_set_header X-Auth-Request-Redirect $request_uri;
   }
 
   location = /oauth2/auth {
     internal;
+    proxy_pass       http://oauth2-proxy:4180;
+    proxy_set_header Host             $host;
+    proxy_set_header X-Real-IP        $remote_addr;
+    proxy_set_header X-Forwarded-Uri  $request_uri;
+    # proxy_set_header X-Scheme         $scheme;
 
-    # Proxy for AuthN server
-    proxy_pass              http://oauth2-proxy:4180;
-
-    proxy_pass_request_body off;
-    proxy_set_header        Content-Length   "";
-
-    # proxy_set_header      X-Original-URI   $request_uri;
-    proxy_set_header        X-Forwarded-Uri  $request_uri;
-
-    proxy_set_header        Host             $host;
-    proxy_set_header        X-Real-IP        $remote_addr;
+    # nginx auth_request includes headers but not body
+    proxy_set_header Content-Length   "";
+    proxy_pass_request_body           off;
   }
 
   location / {
@@ -130,6 +123,5 @@ server {
   #   proxy_pass        http://hapi-fhir:8080/;
   # }
 
-# https://docs.nginx.com/nginx/admin-guide/security-controls/configuring-subrequest-authentication
 # https://github.com/deskoh/nginx-oauth2-proxy-demo/blob/master/nginx/nginx.conf
 # https://oauth2-proxy.github.io/oauth2-proxy/configuration/integration
