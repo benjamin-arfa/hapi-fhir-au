@@ -123,6 +123,7 @@ To remove the data volumes:
 ```
 docker volume rm backend_postgres_data
 docker volume rm backend_cache
+docker network rm backend_default
 ```
 
 ##### Export
@@ -198,6 +199,7 @@ docker volume ls
 ### System Hardening
 
 * ASD: [Implementing Certificates, TLS, HTTPS and Opportunistic TLS](https://www.cyber.gov.au/resources-business-and-government/maintaining-devices-and-systems/system-hardening-and-administration/web-hardening/implementing-certificates-tls-https-and-opportunistic-tls)
+* Cloudflare docs: [Cipher suites recommendations](https://developers.cloudflare.com/ssl/edge-certificates/additional-options/cipher-suites/recommendations/)
 
 ### OAuth 2.0
 

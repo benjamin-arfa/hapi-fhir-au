@@ -97,8 +97,8 @@ services:
 
       KC_HOSTNAME: ${KEYCLOAK_HOSTNAME}
 
-      KC_HTTPS_CERTIFICATE_FILE: /etc/x509/https/cert.pem
-      KC_HTTPS_CERTIFICATE_KEY_FILE: /etc/x509/https/key.pem
+      KC_HTTPS_CERTIFICATE_FILE: /etc/keycloak/certs/cert.pem
+      KC_HTTPS_CERTIFICATE_KEY_FILE: /etc/keycloak/certs/key.pem
 
       KC_PROXY_HEADERS: forwarded
 
@@ -120,8 +120,8 @@ services:
     # Make sure the certificate and the key (the *.pem files) have the correct permissions -> e.g., sudo chmod 655 *.pem
     volumes:
       - '${PWD}/services/keycloak/scripts/health-check.sh:/opt/keycloak/health-check.sh'
-      - '${PWD}/certs/keycloak-cert.pem:/etc/x509/https/cert.pem'
-      - '${PWD}/certs/keycloak-key.pem:/etc/x509/https/key.pem'
+      - '${PWD}/certs/keycloak-cert.pem:/etc/keycloak/certs/cert.pem'
+      - '${PWD}/certs/keycloak-key.pem:/etc/keycloak/certs/key.pem'
       - '${PWD}/certs:/opt/keycloak/conf/truststores'
       - '${PWD}:/import'
     depends_on:

@@ -30,10 +30,14 @@ The local CA is now installed in the system trust store! ⚡️
 The local CA is now installed in the Firefox trust store (requires browser restart)! 🦊
 ```
 
-Use `mkcert` to generate a key and a certificate for the hostname `hapi-fhir.au.localhost`:
+Use `mkcert` to generate a key and a certificate for the hostnames:
+- `hapi-fhir.au.localhost`
+- `keycloak`
 
 ```
 mkcert -key-file key.pem -cert-file cert.pem hapi-fhir.au.localhost
+mkcert -key-file keycloak-key.pem -cert-file keycloak-cert.pem keycloak
+```
 ```
 
 Move the files into the `\backend\certs` directory and set the file permissions:
