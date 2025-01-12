@@ -171,11 +171,7 @@ services:
       ]
     environment:
 
-      # https://oauth2-proxy.github.io/oauth2-proxy/configuration/providers/openid_connect
-      # https://oauth2-proxy.github.io/oauth2-proxy/configuration/providers/keycloak
-      # https://oauth2-proxy.github.io/oauth2-proxy/configuration/providers/keycloak_oidc
-
-      # https://www.keycloak.org/server/reverseproxy
+      # Reverse proxy config
       OAUTH2_PROXY_REVERSE_PROXY: true
 
       OAUTH2_PROXY_PROXY_HEADERS: xforwarded
@@ -187,8 +183,9 @@ services:
       # Provider config
       # OIDC discovery will fail unless a Keycloak Health Check is enabled and oauth2-proxy depends_on the keycloak
       # service being healthy.
+
       # OAUTH2_PROXY_SKIP_PROVIDER_BUTTON: true
-      # OAUTH2_PROXY_SKIP_OIDC_DISCOVERY: true
+
       OAUTH2_PROXY_PROVIDER: oidc
       OAUTH2_PROXY_PROVIDER_DISPLAY_NAME: OpenID Connect
       # OAUTH2_PROXY_PROVIDER: keycloak
