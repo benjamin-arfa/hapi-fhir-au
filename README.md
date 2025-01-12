@@ -91,7 +91,7 @@ To remove the services:
 docker compose down
 ```
 
-To remove the data volumes:
+To remove the data volumes and network:
 
 ```
 docker volume rm backend_postgres_data
