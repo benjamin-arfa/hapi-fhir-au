@@ -228,5 +228,5 @@ docker volume ls
 
 ### OAuth2 Proxy
 
-* Keycloak guides: [Integration](https://oauth2-proxy.github.io/oauth2-proxy/configuration/integration)
-* Keycloak guides: [TLS Configuration](https://oauth2-proxy.github.io/oauth2-proxy/configuration/tls/)
+* OAuth2 Proxy docs: [Integration](https://oauth2-proxy.github.io/oauth2-proxy/configuration/integration)
+* OAuth2 Proxy docs: [TLS Configuration](https://oauth2-proxy.github.io/oauth2-proxy/configuration/tls/)
