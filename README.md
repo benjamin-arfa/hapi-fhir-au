@@ -76,7 +76,13 @@ You should see something like:
 Your connection is secure:
 
 <p align="center">
-  <img src="./docs/quick-start-guide/your-connection-is-secure.png" alt="HAPI FHIR Welcome page"/>
+  <img src="./docs/quick-start-guide/your-connection-is-secure.png" alt="Your connection to HAPI FHIR is secure"/>
+</p>
+
+HAPI FHIR cookies:
+
+<p align="center">
+  <img src="./docs/quick-start-guide/hapi-fhir-cookies.png" alt="HAPI FHIR cookies"/>
 </p>
 
 To stop the services:
@@ -112,7 +118,13 @@ https://keycloak:8443
 You should see something like:
 
 <p align="center">
-  <img src="./docs/quick-start-guide/keycloak-welcome-page.png" alt="Welcome page"/>
+  <img src="./docs/quick-start-guide/keycloak-welcome-page.png" alt="Keycloak Admin Console Welcome page"/>
+</p>
+
+You can preview tokens in the Keycloak Admin Console, for example:
+
+<p align="center">
+  <img src="./docs/quick-start-guide/keycloak-generated-id-token.png" alt="Generated ID Token"/>
 </p>
 
 #### Account Console
@@ -126,7 +138,7 @@ https://keycloak:8443/realms/hapi-fhir-dev/account
 You should see something like:
 
 <p align="center">
-  <img src="./docs/quick-start-guide/keycloak-account-welcome-page.png" alt="Welcome page"/>
+  <img src="./docs/quick-start-guide/keycloak-account-welcome-page.png" alt="Keycloak Account Console Welcome page"/>
 </p>
 
 #### Realm Export
