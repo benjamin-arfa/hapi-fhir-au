@@ -117,7 +117,7 @@ services:
       - 8443:8443
       - 9000:9000
 
-    # Make sure the certificate and the key (the *.pem files) have the correct permissions -> e.g., sudo chmod 655 ./certs/*
+    # Make sure the certificate and the key (the *.pem files) have the correct permissions -> e.g., sudo chmod 655 *.pem
     volumes:
       - '${PWD}/services/keycloak/scripts/health-check.sh:/opt/keycloak/health-check.sh'
       - '${PWD}/certs/keycloak-cert.pem:/etc/x509/https/cert.pem'

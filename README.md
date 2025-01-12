@@ -212,6 +212,7 @@ docker volume ls
 
 ### Nginx
 
+* Nginx docs: [NGINX SSL Termination](https://docs.nginx.com/nginx/admin-guide/security-controls/terminating-ssl-http/)
 * Nginx docs: [Authentication Based on Subrequest Result](https://docs.nginx.com/nginx/admin-guide/security-controls/configuring-subrequest-authentication/)
 
 ### OAuth2 Proxy
