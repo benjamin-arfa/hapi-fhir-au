@@ -45,7 +45,7 @@ Move the files into the `\backend\certs` directory and set the file permissions:
 sudo chmod 655 *.pem
 ```
 
-/etc/hosts:
+### /etc/hosts
 
 Update your `/etc/hosts` file:
 
