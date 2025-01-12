@@ -195,6 +195,10 @@ docker volume ls
 
 ## ❯ References
 
+### System Hardening
+
+* ASD: [Implementing Certificates, TLS, HTTPS and Opportunistic TLS](https://www.cyber.gov.au/resources-business-and-government/maintaining-devices-and-systems/system-hardening-and-administration/web-hardening/implementing-certificates-tls-https-and-opportunistic-tls)
+
 ### OAuth 2.0
 
 * okta Developer blog: [OAuth for Java Developers](https://developer.okta.com/blog/2022/06/16/oauth-java)
