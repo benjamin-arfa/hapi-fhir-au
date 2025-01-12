@@ -59,7 +59,7 @@ You should see something like:
 
 **Note:** You can skip this step if you set `OAUTH2_PROXY_SKIP_PROVIDER_BUTTON: true`
 
-Click the 'Sign in with OpenID Connect' button (and sign in to HAPI FHIR using the OIDC Authorization Code flow):
+Click the 'Sign in with OpenID Connect' button and sign in to HAPI FHIR using the OpenID Connect (OIDC) Authorization Code flow:
 
 <p align="center">
   <img src="./docs/quick-start-guide/keycloak-sign-in.png" alt="Sign in with your Keycloak Account"/>
