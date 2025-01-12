@@ -38,7 +38,6 @@ Use `mkcert` to generate a key and a certificate for the following hostnames:
 mkcert -key-file key.pem -cert-file cert.pem hapi-fhir.au.localhost
 mkcert -key-file keycloak-key.pem -cert-file keycloak-cert.pem keycloak
 ```
-```
 
 Move the files into the `\backend\certs` directory and set the file permissions:
 
