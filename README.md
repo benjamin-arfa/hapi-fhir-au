@@ -79,33 +79,6 @@ Your connection is secure:
   <img src="./docs/quick-start-guide/your-connection-is-secure.png" alt="HAPI FHIR Welcome page"/>
 </p>
 
-### Keycloak
-
-To navigate to the Keycloak Admin console (username: admin and password: secret):
-
-```
-https://keycloak:8443
-```
-
-You should see something like:
-
-<p align="center">
-  <img src="./docs/quick-start-guide/keycloak-welcome-page.png" alt="Welcome page"/>
-</p>
-
-Navigate to the Keycloak Account Console:
-
-```
-https://keycloak:8443/realms/hapi-fhir-dev/account
-```
-
-You should see something like:
-
-<p align="center">
-  <img src="./docs/quick-start-guide/keycloak-account-welcome-page.png" alt="Welcome page"/>
-</p>
-
-
 To stop the services:
 
 ```
@@ -126,7 +99,37 @@ docker volume rm backend_cache
 docker network rm backend_default
 ```
 
-#### Export
+### Keycloak
+
+#### Admin Console
+
+To navigate to the Keycloak Admin Console (username: admin and password: secret):
+
+```
+https://keycloak:8443
+```
+
+You should see something like:
+
+<p align="center">
+  <img src="./docs/quick-start-guide/keycloak-welcome-page.png" alt="Welcome page"/>
+</p>
+
+#### Account Console
+
+Navigate to the Keycloak Account Console:
+
+```
+https://keycloak:8443/realms/hapi-fhir-dev/account
+```
+
+You should see something like:
+
+<p align="center">
+  <img src="./docs/quick-start-guide/keycloak-account-welcome-page.png" alt="Welcome page"/>
+</p>
+
+#### Realm Export
 
 To export the `hapi-fhir-dev` realm to a single file (development-realm.json):
 
@@ -138,7 +141,7 @@ docker compose -f docker-compose-keycloak-realm-export.yml down
 docker compose up
 ```
 
-#### Import
+#### Realm Import
 
 Keycloak will import the `hapi-fhir-dev` realm when it starts up:
 
