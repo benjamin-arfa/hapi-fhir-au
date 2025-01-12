@@ -79,7 +79,7 @@ Your connection is secure:
   <img src="./docs/quick-start-guide/your-connection-is-secure.png" alt="HAPI FHIR Welcome page"/>
 </p>
 
-#### Keycloak
+### Keycloak
 
 To navigate to the Keycloak Admin console (username: admin and password: secret):
 
@@ -126,7 +126,7 @@ docker volume rm backend_cache
 docker network rm backend_default
 ```
 
-##### Export
+#### Export
 
 To export the `hapi-fhir-dev` realm to a single file (development-realm.json):
 
@@ -138,7 +138,7 @@ docker compose -f docker-compose-keycloak-realm-export.yml down
 docker compose up
 ```
 
-##### Import
+#### Import
 
 Keycloak will import the `hapi-fhir-dev` realm when it starts up:
 
