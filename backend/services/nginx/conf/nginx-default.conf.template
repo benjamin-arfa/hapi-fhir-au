@@ -89,10 +89,8 @@ server {
 
 server {
 
-  # server_name hapi-fhir.au.localhost;
   server_name keycloak;
   listen 443 ssl;
-  # include /etc/nginx/conf/keycloak-ssl.conf;
   include /etc/nginx/conf/ssl.conf;
 
   location /keycloak/ {
