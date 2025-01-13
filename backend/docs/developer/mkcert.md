@@ -36,7 +36,7 @@ Use `mkcert` to generate a key and a certificate for the following hostnames:
 
 ```
 mkcert -key-file key.pem -cert-file cert.pem hapi-fhir.au.localhost
-mkcert -key-file keycloak-key.pem -cert-file keycloak-cert.pem keycloak
+mkcert -key-file keycloak-key.pem -cert-file keycloak-cert.pem keycloak.au.localhost
 ```
 
 Move the files into the `\backend\certs` directory and set the file permissions:
@@ -53,10 +53,10 @@ Update your `/etc/hosts` file:
 sudo nano /etc/hosts
 ```
 
-Add the hostnames, `hapi-fhir.au.localhost` and `keycloak`:
+Add the hostnames, `hapi-fhir.au.localhost` and `keycloak.au.localhost`:
 
 ```
-127.0.0.1 localhost hapi-fhir.au.localhost keycloak
+127.0.0.1 localhost hapi-fhir.au.localhost keycloak.au.localhost
 ```
 
 **Note**: Remember that `mkcert` is meant for development purposes, not production, so it should not be used on end 

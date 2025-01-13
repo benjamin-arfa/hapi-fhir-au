@@ -112,7 +112,7 @@ docker network rm backend_default
 To navigate to the Keycloak Admin Console (username: admin and password: secret):
 
 ```
-https://keycloak:8443
+https://keycloak.au.localhost:8443
 ```
 
 You should see something like:
@@ -132,7 +132,7 @@ You can preview tokens in the Keycloak Admin Console, for example:
 Navigate to the Keycloak Account Console:
 
 ```
-https://keycloak:8443/realms/hapi-fhir-dev/account
+https://keycloak.au.localhost:8443/realms/hapi-fhir-dev/account
 ```
 
 You should see something like:
