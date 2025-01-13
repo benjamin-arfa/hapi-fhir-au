@@ -1,3 +1,5 @@
 hapi:
   fhir:
+    # server_address: http://localhost:8080/fhir
+    server_address: https://hapi-fhir.au.localhost/fhir
     default_encoding: json

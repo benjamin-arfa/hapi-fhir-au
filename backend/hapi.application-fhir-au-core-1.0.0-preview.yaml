@@ -1,5 +1,7 @@
 hapi:
   fhir:
+    # server_address: http://localhost:8080/fhir
+    server_address: https://hapi-fhir.au.localhost/fhir
     default_encoding: json
     implementationguides:
       au_core:
@@ -11,3 +13,4 @@ hapi:
         fetchDependencies: true
     logical_urls:
       - http://hl7.org.au/*
+      - https://hl7.org.au/*
