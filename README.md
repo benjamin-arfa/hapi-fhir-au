@@ -90,7 +90,7 @@ Navigate to the OpenAPI UI for the HAPI FHIR R4 Server:
 You should see something like:
 
 <p align="center">
-  <img src="./docs/quick-start-guide/hapi-fhir-open-api-ui.png" alt="HAPI FHIR OpenAPI UI"/>
+  <img src="docs/quick-start-guide/hapi-fhir-openapi-ui.png" alt="HAPI FHIR OpenAPI UI"/>
 </p>
 
 ```
