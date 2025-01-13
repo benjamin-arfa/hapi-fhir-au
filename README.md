@@ -45,7 +45,7 @@ docker compose up
 
 **Note:** Docker Compose will look for an `.env` file in the current working directory.
 
-Sign in:
+Sign in to the HAPI FHIR Web Test Page Overlay:
 
 ```
 https://hapi-fhir.au.localhost
@@ -84,6 +84,18 @@ HAPI FHIR cookies:
 <p align="center">
   <img src="./docs/quick-start-guide/hapi-fhir-cookies.png" alt="HAPI FHIR cookies"/>
 </p>
+
+Navigate to the OpenAPI UI for the HAPI FHIR R4 Server:
+
+You should see something like:
+
+<p align="center">
+  <img src="./docs/quick-start-guide/hapi-fhir-open-api-ui.png" alt="HAPI FHIR OpenAPI UI"/>
+</p>
+
+```
+https://hapi-fhir.au.localhost/fhir
+```
 
 To stop the services:
 
