@@ -60,6 +60,8 @@ services:
     networks:
       - hapi_fhir_network
 
+  # keycloak
+  #   container_name: keycloak
   keycloak.au.localhost:
     container_name: keycloak.au.localhost
     build:
