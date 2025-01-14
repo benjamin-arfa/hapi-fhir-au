@@ -89,6 +89,17 @@ You should see something like:
   <img src="docs/quick-start-guide/hapi-fhir-openapi-ui.png" alt="HAPI FHIR OpenAPI UI"/>
 </p>
 
+**Note:** You can override the default FHIR Server Base URL, for example:
+
+```
+hapi:
+  fhir:
+    # server_address: http://localhost:8080/fhir
+    server_address: https://hapi-fhir.au.localhost/fhir
+```
+
+See: [hapi.application.yaml](https://github.com/Robinyo/hapi-fhir-au/blob/main/backend/hapi.application.yaml)
+
 To stop the services:
 
 ```
