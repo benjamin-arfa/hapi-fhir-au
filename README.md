@@ -65,7 +65,7 @@ Click the 'Sign in with OpenID Connect' button.
   <img src="./docs/quick-start-guide/keycloak-sign-in.png" alt="Sign in with your Keycloak Account"/>
 </p>
 
-Enter your username (hey@rob-ferguson.me) and password (Password12) and then click the Sign in button:
+Enter your username and password and then click the Sign In button:
 
 <p align="center">
   <img src="./docs/quick-start-guide/hapi-fhir-welcome-page.png" alt="HAPI FHIR Welcome page"/>
