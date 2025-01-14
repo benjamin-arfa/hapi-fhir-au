@@ -87,15 +87,15 @@ HAPI FHIR cookies:
 
 Navigate to the OpenAPI UI for the HAPI FHIR R4 Server:
 
+```
+https://hapi-fhir.au.localhost/fhir
+```
+
 You should see something like:
 
 <p align="center">
   <img src="docs/quick-start-guide/hapi-fhir-openapi-ui.png" alt="HAPI FHIR OpenAPI UI"/>
 </p>
-
-```
-https://hapi-fhir.au.localhost/fhir
-```
 
 To stop the services:
 
