@@ -57,15 +57,15 @@ You should see something like:
   <img src="./docs/quick-start-guide/oauth2-proxy-sign-in.png" alt="Sign in with OpenID Connect"/>
 </p>
 
-**Note:** You can skip this step if you set `OAUTH2_PROXY_SKIP_PROVIDER_BUTTON: true`
+Click the 'Sign in with OpenID Connect' button.
 
-Click the 'Sign in with OpenID Connect' button and sign in using the OpenID Connect (OIDC) Authorization Code flow:
+**Note:** You can skip this step if you set `OAUTH2_PROXY_SKIP_PROVIDER_BUTTON: true`
 
 <p align="center">
   <img src="./docs/quick-start-guide/keycloak-sign-in.png" alt="Sign in with your Keycloak Account"/>
 </p>
 
-Enter your username (hey@rob-ferguson.me) and password (Password12) then click the Sign in button:
+Enter your username (hey@rob-ferguson.me) and password (Password12) and then click the Sign in button:
 
 <p align="center">
   <img src="./docs/quick-start-guide/hapi-fhir-welcome-page.png" alt="HAPI FHIR Welcome page"/>
@@ -75,12 +75,6 @@ Your connection is secure:
 
 <p align="center">
   <img src="./docs/quick-start-guide/your-connection-is-secure.png" alt="Your connection to HAPI FHIR is secure"/>
-</p>
-
-HAPI FHIR cookies:
-
-<p align="center">
-  <img src="./docs/quick-start-guide/hapi-fhir-cookies.png" alt="HAPI FHIR cookies"/>
 </p>
 
 Navigate to the OpenAPI UI for the HAPI FHIR R4 Server:
