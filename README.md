@@ -45,7 +45,7 @@ docker compose up
 
 **Note:** Docker Compose will look for an `.env` file in the current working directory.
 
-Sign in to the HAPI FHIR Web Test Page Overlay:
+Navigate to:
 
 ```
 https://hapi-fhir.au.localhost
@@ -65,7 +65,7 @@ Click the 'Sign in with OpenID Connect' button and sign in using the OpenID Conn
   <img src="./docs/quick-start-guide/keycloak-sign-in.png" alt="Sign in with your Keycloak Account"/>
 </p>
 
-Enter your username (hey@rob-ferguson.me) and password (Password12) then click the Sign in button, you should see something like:
+Enter your username (hey@rob-ferguson.me) and password (Password12) then click the Sign in button:
 
 <p align="center">
   <img src="./docs/quick-start-guide/hapi-fhir-welcome-page.png" alt="HAPI FHIR Welcome page"/>
