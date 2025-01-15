@@ -124,7 +124,7 @@ docker network rm backend_hapi_network
 
 #### Request tokens
 
-To access the API, you must request an access token for it. To do so, you will need to POST to the token URL.
+To access the FHIR API, you must request an access token for it. To do so, you will need to POST to the token URL.
 
 For example:
 
@@ -139,7 +139,7 @@ ACCESS_TOKEN=$(curl --request POST --silent \
 echo "$ACCESS_TOKEN"                 
 ```
 
-#### Call API
+#### Call the API
 
 To call the API, an application must pass the retrieved access token as a Bearer token in the Authorization header of 
 your HTTP request.
