@@ -53,7 +53,7 @@ server {
     if ($http_authorization = "") {
         error_page 401 = /oauth2/start;
     }
-    
+
     # Pass information via X-User and X-Email headers to backend, requires running with --set-xauthrequest flag
     auth_request_set $user   $upstream_http_x_auth_request_user;
     auth_request_set $email  $upstream_http_x_auth_request_email;
