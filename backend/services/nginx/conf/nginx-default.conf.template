@@ -51,7 +51,7 @@ server {
     # with a valid 'Authorization: Bearer <token>' header to pass through the proxy as normal.
     # See: https://github.com/oauth2-proxy/oauth2-proxy/issues/809
     if ($http_authorization = "") {
-        error_page 401 = /oauth2/start;
+      error_page 401 = /oauth2/start;
     }
 
     # Pass information via X-User and X-Email headers to backend, requires running with --set-xauthrequest flag
