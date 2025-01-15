@@ -141,7 +141,7 @@ echo "$ACCESS_TOKEN"
 
 #### Call the API
 
-To call the API, an application must pass the retrieved access token as a Bearer token in the Authorization header of your HTTP request.
+To call the API, an application must pass the access token as a Bearer token in the Authorization header of your HTTP request.
 
 For example:
 
