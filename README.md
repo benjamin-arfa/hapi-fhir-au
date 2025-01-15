@@ -120,29 +120,28 @@ docker volume rm backend_cache
 docker network rm backend_hapi_network
 ```
 
-### Call the FHIR API using the OAuth 2.0 Client Credentials Flow
+### Call the FHIR API
 
-#### Request tokens
+#### Request a token
 
-To access the FHIR API, you must request an access token for it. To do so, you will need to POST to the token URL.
+To access the API, you must request an access token. You will need to POST to the token URL and use the OAuth 2.0 **Client Credentials Flow**.
 
 For example:
 
 ```
 ACCESS_TOKEN=$(curl --request POST --silent \
-                 --url 'https://keycloak.au.localhost:8443/realms/hapi-fhir-dev/protocol/openid-connect/token' \
-                 --header 'content-type: application/x-www-form-urlencoded' \
-                 --data grant_type=client_credentials \
-                 --data client_id=oauth2-proxy \
-                 --data client_secret=aHkRec1BYkfaKgMg164JmvKu8u9iWNHM | (jq -r '.access_token'))
+  --url 'https://keycloak.au.localhost:8443/realms/hapi-fhir-dev/protocol/openid-connect/token' \
+  --header 'content-type: application/x-www-form-urlencoded' \
+  --data grant_type=client_credentials \
+  --data client_id=oauth2-proxy \
+  --data client_secret=aHkRec1BYkfaKgMg164JmvKu8u9iWNHM | (jq -r '.access_token'))
                  
 echo "$ACCESS_TOKEN"                 
 ```
 
 #### Call the API
 
-To call the API, an application must pass the retrieved access token as a Bearer token in the Authorization header of 
-your HTTP request.
+To call the API, an application must pass the retrieved access token as a Bearer token in the Authorization header of your HTTP request.
 
 For example:
 
