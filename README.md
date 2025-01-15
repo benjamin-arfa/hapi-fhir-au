@@ -57,7 +57,7 @@ You should see something like:
   <img src="./docs/quick-start-guide/oauth2-proxy-sign-in.png" alt="Sign in with OpenID Connect"/>
 </p>
 
-Click the 'Sign in with OpenID Connect' button and sign in using the OpenID Connect (OIDC) Authorization Code Flow.
+Click the 'Sign in with OpenID Connect' button and sign in using the OpenID Connect (OIDC) **Authorization Code Flow**.
 
 **Note:** You can skip this step if you set `OAUTH2_PROXY_SKIP_PROVIDER_BUTTON: true`
 
