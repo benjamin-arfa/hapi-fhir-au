@@ -132,14 +132,13 @@ To access the API, you must request an access token. You will need to POST to th
 For example:
 
 ```
-ACCESS_TOKEN=$(curl --request POST --silent \
-  --url 'https://keycloak.au.localhost:8443/realms/hapi-fhir-dev/protocol/openid-connect/token' \
-  --header 'content-type: application/x-www-form-urlencoded' \
-  --data grant_type=client_credentials \
-  --data client_id=oauth2-proxy \
-  --data client_secret=aHkRec1BYkfaKgMg164JmvKu8u9iWNHM | (jq -r '.access_token'))
+ACCESS_TOKEN=$(curl -s -X POST https://keycloak.au.localhost:8443/realms/hapi-fhir-dev/protocol/openid-connect/token \
+  -H 'content-type: application/x-www-form-urlencoded' \
+  -d grant_type=client_credentials \
+  -d client_id=oauth2-proxy \
+  -d client_secret=aHkRec1BYkfaKgMg164JmvKu8u9iWNHM | (jq -r '.access_token'))
                  
-echo "$ACCESS_TOKEN"                 
+# echo "$ACCESS_TOKEN"                 
 ```
 
 #### Call the API
