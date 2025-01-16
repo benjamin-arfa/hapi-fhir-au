@@ -8,6 +8,9 @@
   <b>A sample HAPI FHIR with Auth Starter Project.</b> <br>
 </p>
 
+The goal of this project is to demonstrate secure access to FHIR resources in the form of OAuth 2.0-compliant 
+authorisation (i.e., SMART on FHIR) and OpenID Connect authentication.
+
 ![divider](./divider.png)
 
 ## ❯ Quick Start
@@ -280,6 +283,11 @@ docker volume ls
 * Keycloak guides: [Configuring the hostname](https://www.keycloak.org/server/hostname)
 * Keycloak guides: [Using a reverse proxy](https://www.keycloak.org/server/reverseproxy)
 * Keycloak guides: [Running Keycloak in a container](https://www.keycloak.org/server/containers)
+
+### Keycloak-based  Development
+
+* GitHub: [Keycloak Project Example](https://github.com/thomasdarimont/keycloak-project-example)
+* GitHub: [Awesome Keycloak](https://github.com/thomasdarimont/awesome-keycloak)
 
 ### Nginx
 
