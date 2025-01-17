@@ -177,7 +177,7 @@ You can preview tokens in the Keycloak Admin Console, for example:
 
 #### Account Console
 
-Navigate to the Keycloak Account Console:
+To navigate to the Keycloak Account Console:
 
 ```
 https://keycloak.au.localhost:8443/realms/hapi-fhir-dev/account
