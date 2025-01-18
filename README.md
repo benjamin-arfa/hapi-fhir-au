@@ -77,10 +77,10 @@ Enter your username and password and then click the 'Sign In' button:
 Your connection is secure:
 
 <p align="center">
-  <img src="./docs/quick-start-guide/your-connection-is-secure.png" alt="Your connection to HAPI FHIR is secure"/>
+  <img src="docs/quick-start-guide/hapi-fhir-your-connection-is-secure.png" alt="Your connection to HAPI FHIR is secure"/>
 </p>
 
-Navigate to the OpenAPI UI for the HAPI FHIR R4 Server:
+Navigate to the OpenAPI (Swagger) UI for the HAPI FHIR R4 Server:
 
 ```
 https://hapi-fhir.au.localhost/fhir
@@ -124,6 +124,12 @@ docker network rm backend_hapi_network
 ```
 
 ### Call the FHIR API
+
+You must allow the 'Service account roles' Capability config setting in order to enable support for the 'Client Credentials Grant':
+
+<p align="center">
+  <img src="./docs/quick-start-guide/hapi-fhir-service-account-roles.png" alt="Keycloak Capability Config"/>
+</p>
 
 #### Request a token
 
