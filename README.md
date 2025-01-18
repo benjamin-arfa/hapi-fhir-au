@@ -125,7 +125,7 @@ docker network rm backend_hapi_network
 
 ### Call the FHIR API
 
-You must allow the 'Service account roles' Capability config setting in order to enable support for the 'Client Credentials Grant':
+You must allow the 'Service account roles' capability config setting in order to enable support for the 'Client Credentials Grant':
 
 <p align="center">
   <img src="./docs/quick-start-guide/hapi-fhir-service-account-roles.png" alt="Keycloak Capability Config"/>
