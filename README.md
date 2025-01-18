@@ -133,7 +133,7 @@ You must allow the 'Service account roles' capability config setting in order to
 
 #### Request a token
 
-To access the API, you must request an access token. You will need to POST to the token URL:
+To access the API, you must request an access token. You will need to POST to the token URL.
 
 For example:
 
