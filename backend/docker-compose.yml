@@ -76,23 +76,20 @@ services:
       timeout: 5s
 
     # 'start-dev',
-    #  'start',
+    # 'start',
     # '-Dauto-build',
     # '--log-level=INFO,io.vertx.ext.web.impl.RouterImpl:TRACE',
 
-    # https://www.keycloak.org/server/enabletls
-    # When you use a pair of matching certificate and private key files in PEM format, and you configure Keycloak to
-    # use them. Keycloak creates a keystore out of these files in memory and uses this keystore afterwards.
+    # '-Dkeycloak.migration.action=import',
+    # '-Dkeycloak.migration.provider=singleFile',
+    # '-Dkeycloak.migration.realmName=hapi-fhir-dev',
+    # '-Dkeycloak.migration.strategy=OVERWRITE_EXISTING',
+    # '-Dkeycloak.migration.file=/import/development-realm.json',
 
     command:
       [
         'start',
         '--log-level=INFO,io.vertx.ext.web.impl.RouterImpl:TRACE',
-        '-Dkeycloak.migration.action=import',
-        '-Dkeycloak.migration.provider=singleFile',
-        '-Dkeycloak.migration.realmName=hapi-fhir-dev',
-        '-Dkeycloak.migration.strategy=OVERWRITE_EXISTING',
-        '-Dkeycloak.migration.file=/import/development-realm.json',
       ]
 
     environment:

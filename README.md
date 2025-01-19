@@ -203,7 +203,6 @@ To export the `hapi-fhir-dev` realm to a single file (development-realm.json):
 docker compose stop
 docker compose -f docker-compose-keycloak-realm-export.yml up
 docker compose -f docker-compose-keycloak-realm-export.yml stop
-docker compose -f docker-compose-keycloak-realm-export.yml down
 docker compose up
 ```
 
@@ -289,12 +288,15 @@ docker volume ls
 
 ### Keycloak
 
-* Keycloak guides: [Configuring Keycloak for production](https://www.keycloak.org/server/configuration-production)
-* Keycloak guides: [Configuring TLS](https://www.keycloak.org/server/enabletls)
-* Keycloak guides: [Configuring trusted certificates](https://www.keycloak.org/server/keycloak-truststore)
-* Keycloak guides: [Configuring the hostname](https://www.keycloak.org/server/hostname)
-* Keycloak guides: [Using a reverse proxy](https://www.keycloak.org/server/reverseproxy)
-* Keycloak guides: [Running Keycloak in a container](https://www.keycloak.org/server/containers)
+* Keycloak docs: [Configuring Keycloak for production](https://www.keycloak.org/server/configuration-production)
+* Keycloak docs: [Configuring TLS](https://www.keycloak.org/server/enabletls)
+* Keycloak docs: [Configuring trusted certificates](https://www.keycloak.org/server/keycloak-truststore)
+* Keycloak docs: [Configuring the hostname](https://www.keycloak.org/server/hostname)
+* Keycloak docs: [Using a reverse proxy](https://www.keycloak.org/server/reverseproxy)
+* Keycloak docs: [Running Keycloak in a container](https://www.keycloak.org/server/containers)
+* Keycloak docs: [Migrating to the Quarkus distribution](https://www.keycloak.org/migration/migrating-to-quarkus)
+* Keycloak docs: [Upgrading Guide - 26.1.0](https://www.keycloak.org/docs/latest/upgrading/)
+* Keycloak docs: [Authorization Services Guide](https://www.keycloak.org/docs/latest/authorization_services/index.html)
 
 ### Keycloak-based  Development
 
