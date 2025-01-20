@@ -78,7 +78,14 @@
       "attributes" : { }
     } ],
     "client" : {
-      "oauth2-proxy" : [ ],
+      "oauth2-proxy" : [ {
+        "id" : "5ad00123-d7bc-4b44-8a38-a9322d5ed963",
+        "name" : "uma_protection",
+        "composite" : false,
+        "clientRole" : true,
+        "containerId" : "38ca69e4-14e5-4f40-9ece-5e1dc7c46f69",
+        "attributes" : { }
+      } ],
       "realm-management" : [ {
         "id" : "b1217447-ee07-4adc-9a99-e5a274b25d3d",
         "name" : "query-realms",
@@ -249,14 +256,6 @@
       } ],
       "security-admin-console" : [ ],
       "admin-cli" : [ ],
-      "hapi-fhir-resource-server" : [ {
-        "id" : "09f2714e-6cda-4609-8095-4f0d88c2af61",
-        "name" : "uma_protection",
-        "composite" : false,
-        "clientRole" : true,
-        "containerId" : "39a9f844-620e-40c1-afe7-5586ec15964a",
-        "attributes" : { }
-      } ],
       "account-console" : [ ],
       "broker" : [ {
         "id" : "c9e50200-1eac-44d0-9d7b-89dfcc92cdc8",
@@ -406,24 +405,13 @@
     "disableableCredentialTypes" : [ ],
     "requiredActions" : [ ],
     "realmRoles" : [ "default-roles-hapi-fhir-dev" ],
-    "notBefore" : 0,
-    "groups" : [ ]
-  }, {
-    "id" : "aa1d2eb4-42df-484f-8af0-f1b4f9b3525c",
-    "username" : "service-account-hapi-fhir-resource-server",
-    "emailVerified" : false,
-    "createdTimestamp" : 1737251900972,
-    "enabled" : true,
-    "totp" : false,
-    "serviceAccountClientId" : "hapi-fhir-resource-server",
-    "credentials" : [ ],
-    "disableableCredentialTypes" : [ ],
-    "requiredActions" : [ ],
-    "realmRoles" : [ "default-roles-hapi-fhir-dev" ],
-    "clientRoles" : {
-      "hapi-fhir-resource-server" : [ "uma_protection" ]
-    },
-    "notBefore" : 0,
+    "clientConsents" : [ {
+      "clientId" : "oauth2-proxy",
+      "grantedClientScopes" : [ "profile", "email", "roles" ],
+      "createdDate" : 1737328568800,
+      "lastUpdatedDate" : 1737331383018
+    } ],
+    "notBefore" : 1737331440,
     "groups" : [ ]
   }, {
     "id" : "da4f0912-1cd9-432d-9c9d-a55db11093de",
@@ -437,6 +425,9 @@
     "disableableCredentialTypes" : [ ],
     "requiredActions" : [ ],
     "realmRoles" : [ "default-roles-hapi-fhir-dev" ],
+    "clientRoles" : {
+      "oauth2-proxy" : [ "uma_protection" ]
+    },
     "notBefore" : 0,
     "groups" : [ ]
   } ],
@@ -581,126 +572,11 @@
     "defaultClientScopes" : [ "web-origins", "acr", "profile", "roles", "basic", "email" ],
     "optionalClientScopes" : [ "address", "phone", "organization", "offline_access", "microprofile-jwt" ]
   }, {
-    "id" : "39a9f844-620e-40c1-afe7-5586ec15964a",
-    "clientId" : "hapi-fhir-resource-server",
-    "name" : "",
-    "description" : "",
-    "rootUrl" : "https://hapi-fhir.au.localhost/fhir",
-    "adminUrl" : "https://hapi-fhir.au.localhost/fhir",
-    "baseUrl" : "",
-    "surrogateAuthRequired" : false,
-    "enabled" : true,
-    "alwaysDisplayInConsole" : false,
-    "clientAuthenticatorType" : "client-secret",
-    "secret" : "mpKZUoy5vXn3R9f2LW8VsDCSXfJb5JCM",
-    "redirectUris" : [ "https://hapi-fhir.au.localhost/oauth2/callback" ],
-    "webOrigins" : [ "https://hapi-fhir.au.localhost" ],
-    "notBefore" : 0,
-    "bearerOnly" : false,
-    "consentRequired" : false,
-    "standardFlowEnabled" : true,
-    "implicitFlowEnabled" : false,
-    "directAccessGrantsEnabled" : false,
-    "serviceAccountsEnabled" : true,
-    "authorizationServicesEnabled" : true,
-    "publicClient" : false,
-    "frontchannelLogout" : true,
-    "protocol" : "openid-connect",
-    "attributes" : {
-      "realm_client" : "false",
-      "oidc.ciba.grant.enabled" : "false",
-      "client.secret.creation.time" : "1737251900",
-      "backchannel.logout.session.required" : "true",
-      "oauth2.device.authorization.grant.enabled" : "false",
-      "backchannel.logout.revoke.offline.tokens" : "false"
-    },
-    "authenticationFlowBindingOverrides" : { },
-    "fullScopeAllowed" : true,
-    "nodeReRegistrationTimeout" : -1,
-    "protocolMappers" : [ {
-      "id" : "ff5d256c-8a06-4292-b966-9a3dd66d6cd1",
-      "name" : "Client ID",
-      "protocol" : "openid-connect",
-      "protocolMapper" : "oidc-usersessionmodel-note-mapper",
-      "consentRequired" : false,
-      "config" : {
-        "user.session.note" : "client_id",
-        "id.token.claim" : "true",
-        "introspection.token.claim" : "true",
-        "access.token.claim" : "true",
-        "claim.name" : "client_id",
-        "jsonType.label" : "String"
-      }
-    }, {
-      "id" : "e80432e7-a2d0-4a51-969d-1737a4b19d0a",
-      "name" : "Client IP Address",
-      "protocol" : "openid-connect",
-      "protocolMapper" : "oidc-usersessionmodel-note-mapper",
-      "consentRequired" : false,
-      "config" : {
-        "user.session.note" : "clientAddress",
-        "id.token.claim" : "true",
-        "introspection.token.claim" : "true",
-        "access.token.claim" : "true",
-        "claim.name" : "clientAddress",
-        "jsonType.label" : "String"
-      }
-    }, {
-      "id" : "8eaf28c8-a49f-457f-bbf0-9ce0482a303c",
-      "name" : "Client Host",
-      "protocol" : "openid-connect",
-      "protocolMapper" : "oidc-usersessionmodel-note-mapper",
-      "consentRequired" : false,
-      "config" : {
-        "user.session.note" : "clientHost",
-        "id.token.claim" : "true",
-        "introspection.token.claim" : "true",
-        "access.token.claim" : "true",
-        "claim.name" : "clientHost",
-        "jsonType.label" : "String"
-      }
-    } ],
-    "defaultClientScopes" : [ "web-origins", "acr", "profile", "roles", "basic", "email" ],
-    "optionalClientScopes" : [ "address", "phone", "organization", "offline_access", "microprofile-jwt" ],
-    "authorizationSettings" : {
-      "allowRemoteResourceManagement" : true,
-      "policyEnforcementMode" : "ENFORCING",
-      "resources" : [ {
-        "name" : "Default Resource",
-        "type" : "urn:hapi-fhir-resource-server:resources:default",
-        "ownerManagedAccess" : false,
-        "attributes" : { },
-        "uris" : [ "/*" ]
-      } ],
-      "policies" : [ {
-        "name" : "Default Policy",
-        "description" : "A policy that grants access only for users within this realm",
-        "type" : "js",
-        "logic" : "POSITIVE",
-        "decisionStrategy" : "AFFIRMATIVE",
-        "config" : {
-          "code" : "// by default, grants any permission associated with this policy\n$evaluation.grant();\n"
-        }
-      }, {
-        "name" : "Default Permission",
-        "description" : "A permission that applies to the default resource type",
-        "type" : "resource",
-        "logic" : "POSITIVE",
-        "decisionStrategy" : "UNANIMOUS",
-        "config" : {
-          "defaultResourceType" : "urn:hapi-fhir-resource-server:resources:default",
-          "applyPolicies" : "[\"Default Policy\"]"
-        }
-      } ],
-      "scopes" : [ ],
-      "decisionStrategy" : "UNANIMOUS"
-    }
-  }, {
     "id" : "38ca69e4-14e5-4f40-9ece-5e1dc7c46f69",
     "clientId" : "oauth2-proxy",
     "name" : "OAuth2 Proxy",
     "description" : "",
-    "rootUrl" : "",
+    "rootUrl" : "https://hapi-fhir.au.localhost",
     "adminUrl" : "",
     "baseUrl" : "",
     "surrogateAuthRequired" : false,
@@ -712,7 +588,7 @@
     "webOrigins" : [ "*" ],
     "notBefore" : 0,
     "bearerOnly" : false,
-    "consentRequired" : false,
+    "consentRequired" : true,
     "standardFlowEnabled" : true,
     "implicitFlowEnabled" : false,
     "directAccessGrantsEnabled" : false,
@@ -725,6 +601,7 @@
       "oidc.ciba.grant.enabled" : "false",
       "client.secret.creation.time" : "1735531504",
       "backchannel.logout.session.required" : "true",
+      "login_theme" : "keycloak.v2",
       "post.logout.redirect.uris" : "+",
       "oauth2.device.authorization.grant.enabled" : "false",
       "display.on.consent.screen" : "false",
@@ -749,7 +626,7 @@
       }
     } ],
     "defaultClientScopes" : [ "web-origins", "acr", "profile", "roles", "basic", "email" ],
-    "optionalClientScopes" : [ "address", "phone", "organization", "offline_access", "microprofile-jwt" ]
+    "optionalClientScopes" : [ "address", "phone", "patient/*.rs", "organization", "offline_access", "microprofile-jwt" ]
   }, {
     "id" : "d134aaea-8198-4e8a-955f-65d99917c7e8",
     "clientId" : "realm-management",
@@ -1398,9 +1275,20 @@
         "attribute.name" : "Role"
       }
     } ]
+  }, {
+    "id" : "e162a826-b8ca-48b3-91be-c28777614394",
+    "name" : "patient/*.rs",
+    "description" : "Permission to read and search any resource for the current patient.",
+    "protocol" : "openid-connect",
+    "attributes" : {
+      "include.in.token.scope" : "true",
+      "display.on.consent.screen" : "true",
+      "gui.order" : "",
+      "consent.screen.text" : "View patient information"
+    }
   } ],
   "defaultDefaultClientScopes" : [ "role_list", "saml_organization", "profile", "email", "roles", "web-origins", "acr", "basic" ],
-  "defaultOptionalClientScopes" : [ "offline_access", "address", "phone", "microprofile-jwt", "organization" ],
+  "defaultOptionalClientScopes" : [ "offline_access", "address", "phone", "microprofile-jwt", "organization", "patient/*.rs" ],
   "browserSecurityHeaders" : {
     "contentSecurityPolicyReportOnly" : "",
     "xContentTypeOptions" : "nosniff",

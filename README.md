@@ -303,6 +303,11 @@ docker volume ls
 * GitHub: [Keycloak Project Example](https://github.com/thomasdarimont/keycloak-project-example)
 * GitHub: [Awesome Keycloak](https://github.com/thomasdarimont/awesome-keycloak)
 
+### Keycloak Support
+
+* Google Group: [Keycloak User](https://groups.google.com/g/keycloak-user)
+* Google Group: [Keycloak Dev](https://groups.google.com/g/keycloak-dev)
+
 ### Nginx
 
 * Nginx docs: [NGINX SSL Termination](https://docs.nginx.com/nginx/admin-guide/security-controls/terminating-ssl-http/)
