@@ -286,6 +286,12 @@ docker volume ls
 * HL7: [SMART App Launch](https://build.fhir.org/ig/HL7/smart-app-launch/)
 * SMART Health IT: [SMART on FHIR](https://docs.smarthealthit.org/)
 
+### HAPI FHIR
+
+* HAPI FHIR: [Website](https://hapifhir.io/)
+* HAPI FHIR: [Documentation](https://hapifhir.io/hapi-fhir/docs/)
+* Google Group: [HAPI FHIR](https://groups.google.com/g/hapi-fhir)
+
 ### Keycloak
 
 * Keycloak docs: [Configuring Keycloak for production](https://www.keycloak.org/server/configuration-production)
