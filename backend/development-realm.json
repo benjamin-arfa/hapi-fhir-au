@@ -407,9 +407,9 @@
     "realmRoles" : [ "default-roles-hapi-fhir-dev" ],
     "clientConsents" : [ {
       "clientId" : "oauth2-proxy",
-      "grantedClientScopes" : [ "profile", "email", "roles" ],
+      "grantedClientScopes" : [ "profile", "email", "roles", "patient/AllergyIntolerance.read" ],
       "createdDate" : 1737328568800,
-      "lastUpdatedDate" : 1737331383018
+      "lastUpdatedDate" : 1737338220008
     } ],
     "notBefore" : 1737331440,
     "groups" : [ ]
@@ -626,7 +626,7 @@
       }
     } ],
     "defaultClientScopes" : [ "web-origins", "acr", "profile", "roles", "basic", "email" ],
-    "optionalClientScopes" : [ "address", "phone", "patient/*.rs", "organization", "offline_access", "microprofile-jwt" ]
+    "optionalClientScopes" : [ "address", "phone", "organization", "offline_access", "patient/AllergyIntolerance.read", "microprofile-jwt" ]
   }, {
     "id" : "d134aaea-8198-4e8a-955f-65d99917c7e8",
     "clientId" : "realm-management",
@@ -1277,18 +1277,18 @@
     } ]
   }, {
     "id" : "e162a826-b8ca-48b3-91be-c28777614394",
-    "name" : "patient/*.rs",
-    "description" : "Permission to read and search any resource for the current patient.",
+    "name" : "patient/AllergyIntolerance.read",
+    "description" : "Permission to read clinical statements about adverse reactions to substances/products for a specific patient.",
     "protocol" : "openid-connect",
     "attributes" : {
       "include.in.token.scope" : "true",
       "display.on.consent.screen" : "true",
       "gui.order" : "",
-      "consent.screen.text" : "View patient information"
+      "consent.screen.text" : "View allergy information"
     }
   } ],
   "defaultDefaultClientScopes" : [ "role_list", "saml_organization", "profile", "email", "roles", "web-origins", "acr", "basic" ],
-  "defaultOptionalClientScopes" : [ "offline_access", "address", "phone", "microprofile-jwt", "organization", "patient/*.rs" ],
+  "defaultOptionalClientScopes" : [ "offline_access", "address", "phone", "microprofile-jwt", "organization", "patient/AllergyIntolerance.read" ],
   "browserSecurityHeaders" : {
     "contentSecurityPolicyReportOnly" : "",
     "xContentTypeOptions" : "nosniff",
