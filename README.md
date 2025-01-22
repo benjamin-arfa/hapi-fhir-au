@@ -80,6 +80,24 @@ Your connection is secure:
   <img src="docs/quick-start-guide/hapi-fhir-your-connection-is-secure.png" alt="Your connection to HAPI FHIR is secure"/>
 </p>
 
+#### Sign out
+
+In the Keycloak Admin Console you can sign out of the session:
+
+<p align="center">
+  <img src="./docs/quick-start-guide/keycloak-session-logout.png" alt="Keycloak session sign out"/>
+</p>
+
+Using the browser's Developer Tools you can clear the session cookie:
+
+<p align="center">
+  <img src="./docs/quick-start-guide/keycloak-session-logout.png" alt="Clear session cookie"/>
+</p>
+
+The user must now Sign in again :)
+
+#### OpenAPI (Swagger)
+
 Navigate to the OpenAPI (Swagger) UI for the HAPI FHIR R4 Server:
 
 ```
