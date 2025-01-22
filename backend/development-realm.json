@@ -611,6 +611,20 @@
     "fullScopeAllowed" : true,
     "nodeReRegistrationTimeout" : -1,
     "protocolMappers" : [ {
+      "id" : "2678f3dd-1d23-4804-8aea-c0bb45b200c0",
+      "name" : "Client Host",
+      "protocol" : "openid-connect",
+      "protocolMapper" : "oidc-usersessionmodel-note-mapper",
+      "consentRequired" : false,
+      "config" : {
+        "user.session.note" : "clientHost",
+        "id.token.claim" : "true",
+        "introspection.token.claim" : "true",
+        "access.token.claim" : "true",
+        "claim.name" : "clientHost",
+        "jsonType.label" : "String"
+      }
+    }, {
       "id" : "aff364cc-3919-47e4-8ac6-847a15edfed1",
       "name" : "aud-mapper-oauth2-proxy",
       "protocol" : "openid-connect",
@@ -624,9 +638,37 @@
         "access.token.claim" : "true",
         "userinfo.token.claim" : "true"
       }
+    }, {
+      "id" : "017bdaa6-86dd-4212-8bbf-164383293071",
+      "name" : "Client ID",
+      "protocol" : "openid-connect",
+      "protocolMapper" : "oidc-usersessionmodel-note-mapper",
+      "consentRequired" : false,
+      "config" : {
+        "user.session.note" : "client_id",
+        "id.token.claim" : "true",
+        "introspection.token.claim" : "true",
+        "access.token.claim" : "true",
+        "claim.name" : "client_id",
+        "jsonType.label" : "String"
+      }
+    }, {
+      "id" : "259fb508-eade-4425-ae31-a7c5845ca925",
+      "name" : "Client IP Address",
+      "protocol" : "openid-connect",
+      "protocolMapper" : "oidc-usersessionmodel-note-mapper",
+      "consentRequired" : false,
+      "config" : {
+        "user.session.note" : "clientAddress",
+        "id.token.claim" : "true",
+        "introspection.token.claim" : "true",
+        "access.token.claim" : "true",
+        "claim.name" : "clientAddress",
+        "jsonType.label" : "String"
+      }
     } ],
     "defaultClientScopes" : [ "web-origins", "acr", "profile", "roles", "basic", "email" ],
-    "optionalClientScopes" : [ "address", "phone", "organization", "offline_access", "patient/AllergyIntolerance.read", "microprofile-jwt" ]
+    "optionalClientScopes" : [ "address", "system/Patient.read", "phone", "organization", "offline_access", "patient/AllergyIntolerance.read", "microprofile-jwt" ]
   }, {
     "id" : "d134aaea-8198-4e8a-955f-65d99917c7e8",
     "clientId" : "realm-management",
@@ -1184,6 +1226,17 @@
         "user.attribute.locality" : "locality"
       }
     } ]
+  }, {
+    "id" : "d365fad6-9b1a-4ff3-b758-11373e378efe",
+    "name" : "system/Patient.read",
+    "description" : "Permission to read all patient records accessible to the given client using its own credentials.",
+    "protocol" : "openid-connect",
+    "attributes" : {
+      "include.in.token.scope" : "true",
+      "display.on.consent.screen" : "false",
+      "gui.order" : "",
+      "consent.screen.text" : "View patient information"
+    }
   }, {
     "id" : "5301f92a-ca1b-4747-a698-02eca94fad00",
     "name" : "web-origins",
