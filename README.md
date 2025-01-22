@@ -125,6 +125,8 @@ docker network rm backend_hapi_network
 
 ### Call the FHIR API
 
+##### OAuth 2.0 Client Credentials Grant
+
 You must allow the 'Service account roles' capability config setting in order to enable support for the OAuth 2.0 **Client Credentials Grant**:
 
 <p align="center">
@@ -135,17 +137,20 @@ You must allow the 'Service account roles' capability config setting in order to
 
 To access the API, you must request an access token. You will need to POST to the token URL.
 
-For example:
+For example (`scope=system/Patient.read`):
 
 ```
 ACCESS_TOKEN=$(curl -s -X POST https://keycloak.au.localhost:8443/realms/hapi-fhir-dev/protocol/openid-connect/token \
   -H 'content-type: application/x-www-form-urlencoded' \
   -d grant_type=client_credentials \
   -d client_id=oauth2-proxy \
-  -d client_secret=aHkRec1BYkfaKgMg164JmvKu8u9iWNHM | (jq -r '.access_token'))
+  -d client_secret=aHkRec1BYkfaKgMg164JmvKu8u9iWNHM \
+  -d scope=system/Patient.read | (jq -r '.access_token'))
                  
 # echo "$ACCESS_TOKEN"                 
 ```
+
+**Note:** You can use [jwt.io](https://jwt.io/) to decode the access token.
 
 #### Call the API
 
@@ -155,6 +160,10 @@ For example:
 
 ```
 curl -X GET https://hapi-fhir.au.localhost/fhir/metadata \
+  -H 'Content-Type: application/fhir+json' \
+  -H "Authorization: Bearer $ACCESS_TOKEN"
+
+curl -X GET https://hapi-fhir.au.localhost/fhir/Patient?_id=baratz-toni \
   -H 'Content-Type: application/fhir+json' \
   -H "Authorization: Bearer $ACCESS_TOKEN"
 ```
@@ -279,7 +288,6 @@ docker volume ls
 * Spring docs: [Implementation Guidelines for Browser-Based Applications](https://github.com/spring-projects/spring-authorization-server/issues/297#issue-896744390)
 * okta Developer blog: [OAuth for Java Developers](https://developer.okta.com/blog/2022/06/16/oauth-java)
 * OAuth.com: [OAuth 2.0 Playground](https://www.oauth.com/playground/?_gl=1*1fwid4n*_gcl_au*MjEyMTY2MzU4NS4xNzM1MDI2MjQ4*_ga*MTk3OTgwNDIxNS4xNzM1MDI2MjQ4*_ga_QKMSDV5369*MTczNjAyMjIyMS42LjEuMTczNjAyMjkyOS41Ny4wLjA.)
-* okta Developer blog: [Add Auth to Any App with OAuth2 Proxy](https://developer.okta.com/blog/2022/07/14/add-auth-to-any-app-with-oauth2-proxy)
 
 ### SMART on FHIR
 
@@ -313,6 +321,12 @@ docker volume ls
 
 * Google Group: [Keycloak User](https://groups.google.com/g/keycloak-user)
 * Google Group: [Keycloak Dev](https://groups.google.com/g/keycloak-dev)
+
+### okta
+
+* okta Developer blog: [Add Auth to Any App with OAuth2 Proxy](https://developer.okta.com/blog/2022/07/14/add-auth-to-any-app-with-oauth2-proxy)
+* okta forum: [SMART on FHIR wildcard scopes](https://devforum.okta.com/t/creating-wildcard-custom-scopes-for-oauth2/27418)
+* GitHub: [Okta SMART on FHIR Setup Guide - scopes](https://github.com/oktadev/okta-smartfhir-docs/blob/original-v1-documentation/SETUP.md#scopes)
 
 ### Nginx
 
