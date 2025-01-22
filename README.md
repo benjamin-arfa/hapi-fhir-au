@@ -91,7 +91,7 @@ In the Keycloak Admin Console you can sign out of the session:
 Using the browser's Developer Tools you can clear the session cookie:
 
 <p align="center">
-  <img src="./docs/quick-start-guide/keycloak-session-logout.png" alt="Clear session cookie"/>
+  <img src="./docs/quick-start-guide/hapi-fhir-cookies.png" alt="Clear session cookie"/>
 </p>
 
 The user must now Sign in again :)
