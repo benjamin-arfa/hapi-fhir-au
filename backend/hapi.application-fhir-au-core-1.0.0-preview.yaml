@@ -3,6 +3,7 @@ hapi:
     # server_address: http://localhost:8080/fhir
     server_address: https://hapi-fhir.au.localhost/fhir
     default_encoding: json
+    # dao_config.server_id_mode: UUID
     implementationguides:
       au_core:
         name: hl7.fhir.au.core
