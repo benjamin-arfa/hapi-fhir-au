@@ -66,13 +66,12 @@ services:
     command:
       [
         'start',
-        '-Dkeycloak.migration.action=import',
-        '-Dkeycloak.migration.provider=singleFile',
-        '-Dkeycloak.migration.realmName=hapi-fhir-dev',
-        '-Dkeycloak.migration.strategy=OVERWRITE_EXISTING',
-        '-Dkeycloak.migration.file=/import/development-realm.json',
+        # '-Dkeycloak.migration.action=import',
+        # '-Dkeycloak.migration.provider=singleFile',
+        # '-Dkeycloak.migration.realmName=hapi-fhir-dev',
+        # '-Dkeycloak.migration.strategy=OVERWRITE_EXISTING',
+        # '-Dkeycloak.migration.file=/import/development-realm.json',
         '--log-level=INFO,io.vertx.ext.web.impl.RouterImpl:TRACE',
-
       ]
 
     environment:
@@ -183,7 +182,7 @@ services:
 
       # Upstreams configuration
       OAUTH2_PROXY_SSL_UPSTREAM_INSECURE_SKIP_VERIFY: true
-      OAUTH2_PROXY_UPSTREAMS: https://vps-13d3e726.vps.ovh.net:8080/
+      OAUTH2_PROXY_UPSTREAMS: http://vps-13d3e726.vps.ovh.net:8080
 
     env_file: ./.env
     ports:
