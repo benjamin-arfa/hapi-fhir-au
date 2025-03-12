@@ -244,7 +244,7 @@ services:
 
 networks:
   hapi_fhir_network:
-    driver: bridge
+    driver: host
 
 volumes:
   postgres_data:
