@@ -1,6 +1,6 @@
 hapi:
   fhir:
-    server_address: https://vps-13d3e726.vps.ovh.net:8080/fhir
+    server_address: https://localhost:8080/fhir
     #server_address: https://hapi-fhir.au.localhost/fhir
     default_encoding: json
     # dao_config.server_id_mode: UUID
