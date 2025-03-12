@@ -87,7 +87,7 @@ server {
         add_header Set-Cookie $auth_cookie_name_1;
     }
 
-    proxy_pass http://hapi-fhir:8080/;
+    proxy_pass http://vps-13d3e726.vps.ovh.net:8080/;
   }
 
   location = /oauth2/sign_out {
@@ -96,7 +96,7 @@ server {
     }
 
     # Proxy for AuthN server
-    proxy_pass              http://oauth2-proxy:4180;
+    proxy_pass              http://vps-13d3e726.vps.ovh.net:4180;
 
     proxy_set_header        Host                   $host;
     proxy_set_header        X-Real-IP              $remote_addr;
