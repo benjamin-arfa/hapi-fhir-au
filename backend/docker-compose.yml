@@ -182,7 +182,7 @@ services:
 
       # Upstreams configuration
       OAUTH2_PROXY_SSL_UPSTREAM_INSECURE_SKIP_VERIFY: true
-      OAUTH2_PROXY_UPSTREAMS: http://vps-13d3e726.vps.ovh.net:8080
+      OAUTH2_PROXY_UPSTREAMS: http://${OAUTH2_PROXY_HOSTNAME}:8080
 
     env_file: ./.env
     ports:
@@ -204,7 +204,8 @@ services:
     volumes:
       - '${PWD}/services/nginx/conf/ssl.conf:/etc/nginx/conf/ssl.conf'
       - '${PWD}/services/nginx/conf/nginx-default.conf.template:/etc/nginx/templates/default.conf.template'
-      - '${PWD}/certs:/etc/nginx/certs'
+      - '${PWD}/certs/keycloak-cert.pem:/etc/nginx/certs/cert.pem'
+      - '${PWD}/certs/keycloak-key.pem:/etc/nginx/certs/key.pem'
     ports:
       - 8080:8080
       - 443:443
