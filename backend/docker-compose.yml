@@ -118,7 +118,7 @@ services:
       redis:
         condition: service_healthy
       # keycloak:
-      keycloak.au.localhost:
+      keycloak:
         condition: service_healthy
     networks:
       - hapi_fhir_network
@@ -243,13 +243,14 @@ services:
     networks:
       - hapi_fhir_network
 
-
 networks:
   hapi_fhir_network:
     driver: bridge
 
 volumes:
   postgres_data:
+    driver: local
+  cache:
     driver: local
 
 configs:
