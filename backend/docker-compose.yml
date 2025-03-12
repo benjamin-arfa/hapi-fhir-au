@@ -183,7 +183,7 @@ services:
 
       # Upstreams configuration
       OAUTH2_PROXY_SSL_UPSTREAM_INSECURE_SKIP_VERIFY: true
-      OAUTH2_PROXY_UPSTREAMS: https://hapi-fhir:8080/
+      OAUTH2_PROXY_UPSTREAMS: http://hapi-fhir:8080/
 
     env_file: ./.env
     ports:
