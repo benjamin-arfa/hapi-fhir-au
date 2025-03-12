@@ -1,4 +1,5 @@
 services:
+
   postgres:
     container_name: postgres
     build:
@@ -39,8 +40,8 @@ services:
     networks:
       - hapi_fhir_network
 
-  keycloak:
-    container_name: keycloak
+  keycloak.au.localhost:
+    container_name: keycloak.au.localhost
     build:
       context: ./services/keycloak
       dockerfile: Dockerfile
@@ -66,11 +67,6 @@ services:
     command:
       [
         'start',
-        # '-Dkeycloak.migration.action=import',
-        # '-Dkeycloak.migration.provider=singleFile',
-        # '-Dkeycloak.migration.realmName=hapi-fhir-dev',
-        # '-Dkeycloak.migration.strategy=OVERWRITE_EXISTING',
-        # '-Dkeycloak.migration.file=/import/development-realm.json',
         '--log-level=INFO,io.vertx.ext.web.impl.RouterImpl:TRACE',
       ]
 
@@ -165,16 +161,16 @@ services:
 
       # Proxy options
       OAUTH2_PROXY_EMAIL_DOMAINS: '*'
-      OAUTH2_PROXY_REDIRECT_URL: ${PROTOCOL}://${OAUTH2_PROXY_HOSTNAME}:${OAUTH2_PROXY_PORT}/oauth2/callback
-      OAUTH2_PROXY_REVERSE_PROXY: false
+      OAUTH2_PROXY_REDIRECT_URL: ${PROTOCOL}://${OAUTH2_PROXY_HOSTNAME}/oauth2/callback
+      OAUTH2_PROXY_REVERSE_PROXY: true
       # See: https://github.com/oauth2-proxy/oauth2-proxy/issues/809
       OAUTH2_PROXY_SKIP_JWT_BEARER_TOKENS: true
       # OAUTH2_PROXY_SKIP_PROVIDER_BUTTON: true
       OAUTH2_PROXY_SSL_INSECURE_SKIP_VERIFY: true
-      OAUTH2_PROXY_WHITELIST_DOMAINS: ${OAUTH2_PROXY_HOSTNAME}:${KEYCLOAK_PORT}
+      OAUTH2_PROXY_WHITELIST_DOMAINS: ${OAUTH2_PROXY_HOSTNAME}:${OAUTH2_PROXY_PORT}
 
       # Server options
-      OAUTH2_PROXY_HTTP_ADDRESS: ${OAUTH2_PROXY_HOSTNAME}:${OAUTH2_PROXY_PORT}
+      OAUTH2_PROXY_HTTP_ADDRESS: 0.0.0.0:${OAUTH2_PROXY_PORT}
 
       # Session options
       OAUTH2_PROXY_REDIS_CONNECTION_URL: redis://redis
@@ -182,7 +178,7 @@ services:
 
       # Upstreams configuration
       OAUTH2_PROXY_SSL_UPSTREAM_INSECURE_SKIP_VERIFY: true
-      OAUTH2_PROXY_UPSTREAM: http://hapi-fhir:8080
+      OAUTH2_PROXY_UPSTREAMS: http://hapi-fhir:8080/
 
     env_file: ./.env
     ports:
@@ -190,7 +186,7 @@ services:
     depends_on:
       redis:
         condition: service_healthy
-      keycloak:
+      keycloak.au.localhost:
         condition: service_healthy
     networks:
       - hapi_fhir_network
@@ -227,24 +223,24 @@ services:
       SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER:-admin}
       SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-secret}
       SPRING_DATASOURCE_DRIVERCLASSNAME: 'org.postgresql.Driver'
-      #SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: 'ca.uhn.fhir.jpa.model.dialect.HapiFhirPostgresDialect'
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: 'ca.uhn.fhir.jpa.model.dialect.HapiFhirPostgresDialect'
     env_file: ./.env
     expose:
-      - 8080
+      - 80
     configs:
       - source: hapi
         target: /app/config/application.yaml
     depends_on:
       postgres:
         condition: service_healthy
-      keycloak:
+      keycloak.au.localhost:
         condition: service_healthy
     networks:
       - hapi_fhir_network
 
 networks:
   hapi_fhir_network:
-    drivers: bridge
+    driver: bridge
 
 volumes:
   postgres_data:
