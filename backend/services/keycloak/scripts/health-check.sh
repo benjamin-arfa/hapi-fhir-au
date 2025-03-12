@@ -1,6 +1,6 @@
 #!/bin/bash
 
-status=$(curl --insecure --silent https://hapi-fhir.au.localhost:9000/health/ready | (jq -r '.status'))
+status=$(curl --insecure --silent https://vps-13d3e726.vps.ovh.net:9000/health/ready | (jq -r '.status'))
 
 if [[ $status = 'UP' ]] ; then
     exit 0
