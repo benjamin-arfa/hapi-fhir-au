@@ -182,7 +182,7 @@ services:
 
       # Upstreams configuration
       OAUTH2_PROXY_SSL_UPSTREAM_INSECURE_SKIP_VERIFY: true
-      OAUTH2_PROXY_UPSTREAM: http://keycloak:8443
+      OAUTH2_PROXY_UPSTREAM: http://hapi-fhir:8080
 
     env_file: ./.env
     ports:
@@ -244,7 +244,7 @@ services:
 
 networks:
   hapi_fhir_network:
-    driver: host
+    drivers: bridge
 
 volumes:
   postgres_data:
