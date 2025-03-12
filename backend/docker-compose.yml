@@ -176,6 +176,11 @@ services:
     command:
       [
         'start',
+        '-Dkeycloak.migration.action=import',
+        '-Dkeycloak.migration.provider=singleFile',
+        '-Dkeycloak.migration.realmName=hapi-fhir-dev',
+        '-Dkeycloak.migration.strategy=OVERWRITE_EXISTING',
+        '-Dkeycloak.migration.file=/import/development-realm.json',
         '--log-level=INFO,io.vertx.ext.web.impl.RouterImpl:TRACE',
       ]
 
