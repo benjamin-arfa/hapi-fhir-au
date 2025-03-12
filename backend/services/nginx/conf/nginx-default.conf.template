@@ -1,7 +1,7 @@
 server {
 
   server_name vps-13d3e726.vps.ovh.net;
-  listen 8080;
+  listen 80;
   include /etc/nginx/conf/ssl.conf;
 
   return 301 https://$host$request_uri;
