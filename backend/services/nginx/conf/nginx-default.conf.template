@@ -1,7 +1,7 @@
 server {
 
   server_name vps-13d3e726.vps.ovh.net;
-  listen 80;
+  listen 8080;
   include /etc/nginx/conf/ssl.conf;
 
   return 301 https://$host$request_uri;
@@ -20,7 +20,7 @@ server {
   }
 
   location /oauth2/ {
-    proxy_pass             http://vps-13d3e726.vps.ovh.net:4180;
+    proxy_pass             https://vps-13d3e726.vps.ovh.net:4180;
     proxy_set_header       Host                    $host;
     proxy_set_header       X-Real-IP               $remote_addr;
     proxy_set_header       X-Auth-Request-Redirect $request_uri;
@@ -30,7 +30,7 @@ server {
     internal;
 
     # Proxy for AuthN server
-    proxy_pass              http://vps-13d3e726.vps.ovh.net:4180;
+    proxy_pass              https://vps-13d3e726.vps.ovh.net:4180;
 
     proxy_pass_request_body off;
     proxy_set_header        Content-Length         "";
@@ -87,7 +87,13 @@ server {
         add_header Set-Cookie $auth_cookie_name_1;
     }
 
-    proxy_pass http://vps-13d3e726.vps.ovh.net:8080/;
+    proxy_set_header  X-Forwarded-For    $proxy_add_x_forwarded_for;
+    proxy_set_header  X-Forwarded-Host   $host;
+    proxy_set_header  X-Forwarded-Server $host;
+    proxy_set_header  X-Forwarded-Port   $server_port;
+    proxy_set_header  X-Forwarded-Proto  $scheme;
+
+    proxy_pass https://vps-13d3e726.vps.ovh.net:8080/;
   }
 
   location = /oauth2/sign_out {
@@ -96,7 +102,7 @@ server {
     }
 
     # Proxy for AuthN server
-    proxy_pass              http://vps-13d3e726.vps.ovh.net:4180;
+    proxy_pass              https://vps-13d3e726.vps.ovh.net:4180;
 
     proxy_set_header        Host                   $host;
     proxy_set_header        X-Real-IP              $remote_addr;
@@ -111,7 +117,7 @@ server {
   include /etc/nginx/conf/ssl.conf;
 
   location /keycloak/ {
-    proxy_pass        https://keycloak:8443/;
+    proxy_pass        https://vps-13d3e726.vps.ovh.net:8443/;
     proxy_set_header  Host               $host;
     proxy_set_header  X-Real-IP          $remote_addr;
     proxy_set_header  X-Forwarded-For    $proxy_add_x_forwarded_for;
@@ -122,7 +128,7 @@ server {
   }
 
   location /keycloak/auth/ {
-    proxy_pass        https://keycloak:8443/keycloak/auth/;
+    proxy_pass        https://vps-13d3e726.vps.ovh.net:8443/keycloak/auth/;
     proxy_set_header  Host               $host;
     proxy_set_header  X-Real-IP          $remote_addr;
     proxy_set_header  X-Forwarded-For    $proxy_add_x_forwarded_for;
