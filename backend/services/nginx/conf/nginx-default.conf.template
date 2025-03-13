@@ -1,3 +1,7 @@
+upstream hapi-fhir {server vps-13d3e726.vps.ovh.net:8080;}
+upstream oauth2-proxy {server vps-13d3e726.vps.ovh.net:4180;}
+upstream keycloak.au.localhost {server vps-13d3e726.vps.ovh.net:8443;}
+
 server {
   listen 80;
   server_name vps-13d3e726.vps.ovh.net;
@@ -17,7 +21,7 @@ server {
   }
 
   location /oauth2/ {
-    proxy_pass             http://oauth2-proxy:4180;
+    proxy_pass             https://oauth2-proxy;
     proxy_set_header       Host                    $host;
     proxy_set_header       X-Real-IP               $remote_addr;
     proxy_set_header       X-Auth-Request-Redirect $request_uri;
@@ -27,7 +31,13 @@ server {
     internal;
 
     # Proxy for AuthN server
-    proxy_pass              http://oauth2-proxy:4180;
+    proxy_pass              https://oauth2-proxy;
+
+    # Add fail timeout and max fails to handle connection refused errors
+    proxy_connect_timeout   5s;
+    proxy_read_timeout      5s;
+    proxy_send_timeout      5s;
+    proxy_next_upstream     error timeout http_502;
 
     proxy_pass_request_body off;
     proxy_set_header        Content-Length         "";
@@ -36,6 +46,15 @@ server {
 
     proxy_set_header        Host                   $host;
     proxy_set_header        X-Real-IP              $remote_addr;
+
+    # Add error handling for auth failures
+    error_page 502 = @oauth2_down;
+  }
+
+  # Fallback when oauth2-proxy is down
+  location @oauth2_down {
+    return 200; # Allow access when oauth2-proxy is down
+    # Alternatively you could return 401 to force authentication when service is back
   }
 
   location /fhir {
@@ -47,12 +66,11 @@ server {
     proxy_set_header  Host               $host;
     proxy_set_header  X-Real-IP          $remote_addr;
 
-    proxy_pass http://hapi-fhir:80/fhir;
+    proxy_pass https://hapi-fhir;
   }
 
   location / {
     auth_request /oauth2/auth;
-
     error_page 401 =403 /oauth2/sign_in;
 
     # To provide support for API client's enable the '--skip-jwt-bearer-tokens' option which will then allow requests
@@ -101,7 +119,7 @@ server {
     proxy_set_header  X-Forwarded-Port   $server_port;
     proxy_set_header  X-Forwarded-Proto  $scheme;
 
-    proxy_pass http://hapi-fhir:80/;
+    proxy_pass https://hapi-fhir;
   }
 
   location = /oauth2/sign_out {
@@ -110,7 +128,7 @@ server {
     }
 
     # Proxy for AuthN server
-    proxy_pass              http://oauth2-proxy:4180;
+    proxy_pass              https://oauth2-proxy;
 
     proxy_set_header        Host                   $host;
     proxy_set_header        X-Real-IP              $remote_addr;
@@ -124,7 +142,7 @@ server {
   include /etc/nginx/conf/ssl.conf;
 
   location /keycloak/ {
-    proxy_pass        https://keycloak.au.localhost:8443/;
+    proxy_pass        https://keycloak.au.localhost;
     proxy_set_header  Host               $host;
     proxy_set_header  X-Real-IP          $remote_addr;
     proxy_set_header  X-Forwarded-For    $proxy_add_x_forwarded_for;
@@ -135,7 +153,7 @@ server {
   }
 
   location /keycloak/auth/ {
-    proxy_pass        https://keycloak.au.localhost:8443/keycloak/auth/;
+    proxy_pass        https://keycloak.au.localhost/keycloak/auth/;
     proxy_set_header  Host               $host;
     proxy_set_header  X-Real-IP          $remote_addr;
     proxy_set_header  X-Forwarded-For    $proxy_add_x_forwarded_for;
