@@ -1,15 +1,12 @@
 server {
-
-  server_name vps-13d3e726.vps.ovh.net;
   listen 80;
+  server_name vps-13d3e726.vps.ovh.net;
   include /etc/nginx/conf/ssl.conf;
 
   return 301 https://$host$request_uri;
-
 }
 
 server {
-
   server_name vps-13d3e726.vps.ovh.net;
   listen 443 ssl default_server;
   include /etc/nginx/conf/ssl.conf;
@@ -20,7 +17,7 @@ server {
   }
 
   location /oauth2/ {
-    proxy_pass             https://vps-13d3e726.vps.ovh.net:4180;
+    proxy_pass             http://oauth2-proxy:4180;
     proxy_set_header       Host                    $host;
     proxy_set_header       X-Real-IP               $remote_addr;
     proxy_set_header       X-Auth-Request-Redirect $request_uri;
@@ -30,12 +27,11 @@ server {
     internal;
 
     # Proxy for AuthN server
-    proxy_pass              https://vps-13d3e726.vps.ovh.net:4180;
+    proxy_pass              http://oauth2-proxy:4180;
 
     proxy_pass_request_body off;
     proxy_set_header        Content-Length         "";
 
-    # proxy_set_header      X-Original-URI         $request_uri;
     proxy_set_header        X-Forwarded-Uri        $request_uri;
 
     proxy_set_header        Host                   $host;
@@ -51,7 +47,7 @@ server {
     proxy_set_header  Host               $host;
     proxy_set_header  X-Real-IP          $remote_addr;
 
-    proxy_pass https://vps-13d3e726.vps.ovh.net:8080/fhir;
+    proxy_pass http://hapi-fhir:80/fhir;
   }
 
   location / {
@@ -105,7 +101,7 @@ server {
     proxy_set_header  X-Forwarded-Port   $server_port;
     proxy_set_header  X-Forwarded-Proto  $scheme;
 
-    proxy_pass https://vps-13d3e726.vps.ovh.net:8080/;
+    proxy_pass http://hapi-fhir:80/;
   }
 
   location = /oauth2/sign_out {
@@ -114,7 +110,7 @@ server {
     }
 
     # Proxy for AuthN server
-    proxy_pass              https://vps-13d3e726.vps.ovh.net:4180;
+    proxy_pass              http://oauth2-proxy:4180;
 
     proxy_set_header        Host                   $host;
     proxy_set_header        X-Real-IP              $remote_addr;
@@ -123,13 +119,12 @@ server {
 }
 
 server {
-
   server_name vps-13d3e726.vps.ovh.net;
   listen 443 ssl;
   include /etc/nginx/conf/ssl.conf;
 
   location /keycloak/ {
-    proxy_pass        https://vps-13d3e726.vps.ovh.net:8443/;
+    proxy_pass        https://keycloak.au.localhost:8443/;
     proxy_set_header  Host               $host;
     proxy_set_header  X-Real-IP          $remote_addr;
     proxy_set_header  X-Forwarded-For    $proxy_add_x_forwarded_for;
@@ -140,7 +135,7 @@ server {
   }
 
   location /keycloak/auth/ {
-    proxy_pass        https://vps-13d3e726.vps.ovh.net:8443/keycloak/auth/;
+    proxy_pass        https://keycloak.au.localhost:8443/keycloak/auth/;
     proxy_set_header  Host               $host;
     proxy_set_header  X-Real-IP          $remote_addr;
     proxy_set_header  X-Forwarded-For    $proxy_add_x_forwarded_for;
@@ -149,7 +144,6 @@ server {
     proxy_set_header  X-Forwarded-Port   $server_port;
     proxy_set_header  X-Forwarded-Proto  $scheme;
   }
-
 }
 
   # location / {
