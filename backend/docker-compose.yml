@@ -19,8 +19,6 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     env_file: ./.env
-    networks:
-      - hapi_fhir_network
 
   redis:
     container_name: redis
@@ -37,8 +35,6 @@ services:
       timeout: 5s
     volumes:
       - cache:/data
-    networks:
-      - hapi_fhir_network
 
   keycloak.au.localhost:
     container_name: keycloak.au.localhost
@@ -104,8 +100,6 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-    networks:
-      - hapi_fhir_network
 
   oauth2-proxy:
     container_name: oauth2-proxy
@@ -120,6 +114,11 @@ services:
         '--auth-logging=true',
         '--request-logging=true',
       ]
+
+    volumes:
+      - '${PWD}/certs/keycloak-cert.pem:/etc/oauth2-proxy/certs/cert.pem'
+      - '${PWD}/certs/keycloak-key.pem:/etc/oauth2-proxy/certs/key.pem'
+
     environment:
 
       # https://oauth2-proxy.github.io/oauth2-proxy/configuration/overview
@@ -129,10 +128,14 @@ services:
       OAUTH2_PROXY_CLIENT_SECRET: ${CLIENT_SECRET}
       OAUTH2_PROXY_CODE_CHALLENGE_METHOD: S256
       OAUTH2_PROXY_INSECURE_OIDC_ALLOW_UNVERIFIED_EMAIL: true
-      OAUTH2_PROXY_OIDC_ISSUER_URL: ${PROTOCOL}://${KEYCLOAK_HOSTNAME}:${KEYCLOAK_PORT}/realms/${KEYCLOAK_REALM}
+      OAUTH2_PROXY_INSECURE_OIDC_SKIP_ISSUER_VERIFICATION: true
+      OAUTH2_PROXY_OIDC_ISSUER_URL: ${PROTOCOL}://keycloak.au.localhost:${KEYCLOAK_PORT}/realms/${KEYCLOAK_REALM}
       OAUTH2_PROXY_PROVIDER: oidc
       OAUTH2_PROXY_PROVIDER_DISPLAY_NAME: OpenID Connect
       OAUTH2_PROXY_SCOPE: ${SCOPE}
+
+      OAUTH2_PROXY_TLS_CERT_FILE: /etc/oauth2-proxy/certs/cert.pem
+      OAUTH2_PROXY_TLS_KEY_FILE: /etc/oauth2-proxy/certs/key.pem
 
       # Cookie Options
       OAUTH2_PROXY_COOKIE_CSRF_PER_REQUEST: true
@@ -165,7 +168,7 @@ services:
       OAUTH2_PROXY_REVERSE_PROXY: true
       # See: https://github.com/oauth2-proxy/oauth2-proxy/issues/809
       OAUTH2_PROXY_SKIP_JWT_BEARER_TOKENS: true
-      # OAUTH2_PROXY_SKIP_PROVIDER_BUTTON: true
+      OAUTH2_PROXY_SKIP_PROVIDER_BUTTON: true
       OAUTH2_PROXY_SSL_INSECURE_SKIP_VERIFY: true
       OAUTH2_PROXY_WHITELIST_DOMAINS: ${OAUTH2_PROXY_HOSTNAME}:${OAUTH2_PROXY_PORT}
 
@@ -178,7 +181,7 @@ services:
 
       # Upstreams configuration
       OAUTH2_PROXY_SSL_UPSTREAM_INSECURE_SKIP_VERIFY: true
-      OAUTH2_PROXY_UPSTREAMS: http://hapi-fhir:8080/
+      OAUTH2_PROXY_UPSTREAMS: http://${OAUTH2_PROXY_HOSTNAME}:8080/
 
     env_file: ./.env
     ports:
@@ -188,8 +191,6 @@ services:
         condition: service_healthy
       keycloak.au.localhost:
         condition: service_healthy
-    networks:
-      - hapi_fhir_network
 
   nginx:
     container_name: nginx
@@ -209,8 +210,6 @@ services:
       - oauth2-proxy
     extra_hosts:
       - 'host.docker.internal:host-gateway'
-    networks:
-      - hapi_fhir_network
 
   hapi-fhir:
     container_name: hapi-fhir
@@ -235,12 +234,7 @@ services:
         condition: service_healthy
       keycloak.au.localhost:
         condition: service_healthy
-    networks:
-      - hapi_fhir_network
 
-networks:
-  hapi_fhir_network:
-    driver: bridge
 
 volumes:
   postgres_data:
