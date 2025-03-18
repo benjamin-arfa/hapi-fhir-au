@@ -23,7 +23,7 @@ server {
 
   # Redirect root to Keycloak
   location = / {
-    return 302 https://$host/keycloak/;
+    return 302 https://keycloak/keycloak/;
   }
 
   location /keycloak/ {
