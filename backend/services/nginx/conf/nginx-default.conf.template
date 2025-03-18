@@ -1,6 +1,6 @@
-upstream hapi-fhir {server localhost:8080;}
-upstream oauth2-proxy {server localhost:4180;}
-upstream keycloak {server localhost:8443;}
+upstream hapi-fhir {server 51.77.220.2:8080;}
+upstream oauth2-proxy {server 51.77.220.2:4180;}
+upstream keycloak {server 51.77.220.2:8443;}
 
 server {
   listen 80;
