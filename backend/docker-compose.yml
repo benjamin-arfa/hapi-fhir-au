@@ -36,8 +36,8 @@ services:
     volumes:
       - cache:/data
 
-  keycloak.au.localhost:
-    container_name: keycloak.au.localhost
+  keycloak:
+    container_name: keycloak
     build:
       context: ./services/keycloak
       dockerfile: Dockerfile
@@ -129,7 +129,7 @@ services:
       OAUTH2_PROXY_CODE_CHALLENGE_METHOD: S256
       OAUTH2_PROXY_INSECURE_OIDC_ALLOW_UNVERIFIED_EMAIL: true
       OAUTH2_PROXY_INSECURE_OIDC_SKIP_ISSUER_VERIFICATION: true
-      OAUTH2_PROXY_OIDC_ISSUER_URL: ${PROTOCOL}://keycloak.au.localhost:${KEYCLOAK_PORT}/realms/${KEYCLOAK_REALM}
+      OAUTH2_PROXY_OIDC_ISSUER_URL: ${PROTOCOL}://keycloak:${KEYCLOAK_PORT}/realms/${KEYCLOAK_REALM}
       OAUTH2_PROXY_PROVIDER: oidc
       OAUTH2_PROXY_PROVIDER_DISPLAY_NAME: OpenID Connect
       OAUTH2_PROXY_SCOPE: ${SCOPE}
@@ -189,7 +189,7 @@ services:
     depends_on:
       redis:
         condition: service_healthy
-      keycloak.au.localhost:
+      keycloak:
         condition: service_healthy
 
   nginx:
@@ -232,7 +232,7 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-      keycloak.au.localhost:
+      keycloak:
         condition: service_healthy
 
 

@@ -1,6 +1,6 @@
 upstream hapi-fhir {server localhost:8080;}
 upstream oauth2-proxy {server localhost:4180;}
-upstream keycloak.au.localhost {server localhost:8443;}
+upstream keycloak {server localhost:8443;}
 
 server {
   listen 80;
@@ -142,7 +142,7 @@ server {
   include /etc/nginx/conf/ssl.conf;
 
   location /keycloak/ {
-    proxy_pass        http://keycloak.au.localhost;
+    proxy_pass        http://keycloak;
     proxy_set_header  Host               $host;
     proxy_set_header  X-Real-IP          $remote_addr;
     proxy_set_header  X-Forwarded-For    $proxy_add_x_forwarded_for;
@@ -153,7 +153,7 @@ server {
   }
 
   location /keycloak/auth/ {
-    proxy_pass        http://keycloak.au.localhost/keycloak/auth/;
+    proxy_pass        http://keycloak/keycloak/auth/;
     proxy_set_header  Host               $host;
     proxy_set_header  X-Real-IP          $remote_addr;
     proxy_set_header  X-Forwarded-For    $proxy_add_x_forwarded_for;
