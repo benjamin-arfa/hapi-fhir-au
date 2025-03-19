@@ -52,7 +52,7 @@ server {
     proxy_set_header  Host               $host;
     proxy_set_header  X-Real-IP          $remote_addr;
 
-    return 302 https://vps-13d3e726.vps.ovh.net:8080;
+    return 302 https://vps-13d3e726.vps.ovh.net:8080/fhir;
   }
 }
 
