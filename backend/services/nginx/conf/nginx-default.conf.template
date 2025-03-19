@@ -43,7 +43,7 @@ server {
     proxy_set_header  X-Forwarded-Proto  $scheme;
   }
 
-  location /fhir {
+  location = /fhir {
     proxy_set_header  X-Forwarded-For    $proxy_add_x_forwarded_for;
     proxy_set_header  X-Forwarded-Host   $host;
     proxy_set_header  X-Forwarded-Server $host;
@@ -52,7 +52,7 @@ server {
     proxy_set_header  Host               $host;
     proxy_set_header  X-Real-IP          $remote_addr;
 
-    proxy_pass http://vps-13d3e726.vps.ovh.net:8080;
+    return 302 https://vps-13d3e726.vps.ovh.net:8080;
   }
 }
 
