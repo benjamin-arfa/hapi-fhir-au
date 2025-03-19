@@ -224,7 +224,7 @@ services:
       SPRING_DATASOURCE_DRIVERCLASSNAME: 'org.postgresql.Driver'
       SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: 'ca.uhn.fhir.jpa.model.dialect.HapiFhirPostgresDialect'
     env_file: ./.env
-    expose :
+    ports :
       - 80
     configs:
       - source: hapi
