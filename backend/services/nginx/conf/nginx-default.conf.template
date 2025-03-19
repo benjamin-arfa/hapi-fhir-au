@@ -18,6 +18,14 @@ server {
 
   # Redirect root to Keycloak
   location = / {
+    proxy_pass        https://vps-13d3e726.vps.ovh.net:8443;
+    proxy_set_header  Host               $host;
+    proxy_set_header  X-Real-IP          $remote_addr;
+    proxy_set_header  X-Forwarded-For    $proxy_add_x_forwarded_for;
+    proxy_set_header  X-Forwarded-Host   $host;
+    proxy_set_header  X-Forwarded-Server $host;
+    proxy_set_header  X-Forwarded-Port   $server_port;
+    proxy_set_header  X-Forwarded-Proto  $scheme;
     return 302 https://vps-13d3e726.vps.ovh.net:8443/realms/hapi-fhir-dev/protocol/openid-connect/auth?client_id=security-admin-console&redirect_uri=https%3A%2F%2Fvps-13d3e726.vps.ovh.net%3A8443%2Fadmin%2Fhapi-fhir-dev%2Fconsole%2F&state=a1814295-8843-4fe9-a7d5-5ed7a9e25e2b&response_mode=query&response_type=code&scope=openid&nonce=143efb92-4eae-4157-84bc-11f72c1a0164&code_challenge=iZG_Wv23Vkqsul6ThsHDoajremZJ-2T6QRxVPHtY0SI&code_challenge_method=S256;
   }
 
@@ -52,7 +60,7 @@ server {
     proxy_set_header  Host               $host;
     proxy_set_header  X-Real-IP          $remote_addr;
 
-    return 302 https://vps-13d3e726.vps.ovh.net:8080/fhir;
+    return 302 https://vps-13d3e726.vps.ovh.net:8081/fhir;
   }
 }
 
